@@ -2,6 +2,16 @@
 
 A full-stack web application for managing customer complaints end-to-end — from registration through resolution — with role-based access control, SLA tracking, escalation management, and analytics reporting.
 
+## Screenshots
+
+| Dashboard | All Complaints |
+|-----------|---------------|
+| ![Dashboard](images/dashboard.png) | ![All Complaints](images/all-complaints.png) |
+
+| New Complaint Registration | Admin User Management |
+|---------------------------|----------------------|
+| ![New Complaint Registration](images/new-complaint-registration.png) | ![Admin User Management](images/admin-user-management.png) |
+
 ## Tech Stack
 
 | Layer | Technology |

@@ -74,10 +74,26 @@ export default function Login() {
           <p className="demo-title">Demo Accounts</p>
           <table>
             <tbody>
-              <tr><td>Admin</td><td>admin@ccrs.com</td><td>Admin@123</td></tr>
-              <tr><td>Supervisor</td><td>supervisor@ccrs.com</td><td>Supervisor@123</td></tr>
-              <tr><td>Agent</td><td>agent@ccrs.com</td><td>Agent@123</td></tr>
-              <tr><td>Customer</td><td>customer@ccrs.com</td><td>Customer@123</td></tr>
+              {[
+                { role: 'Admin',      email: 'admin@ccrs.com',      password: 'Admin@123' },
+                { role: 'Supervisor', email: 'supervisor@ccrs.com', password: 'Supervisor@123' },
+                { role: 'Agent',      email: 'agent@ccrs.com',      password: 'Agent@123' },
+                { role: 'Customer',   email: 'customer@ccrs.com',   password: 'Customer@123' },
+              ].map(({ role, email, password }) => (
+                <tr key={role}>
+                  <td>{role}</td>
+                  <td>{email}</td>
+                  <td>
+                    <button
+                      type="button"
+                      className="demo-use-btn"
+                      onClick={() => setForm({ email, password })}
+                    >
+                      Use
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
