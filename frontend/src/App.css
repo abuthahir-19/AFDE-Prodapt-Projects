@@ -1,0 +1,141 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  background: #f0f4f8;
+  color: #222;
+  min-height: 100vh;
+}
+
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
+}
+
+/* ── Page layout ─────────────────────────────────────────────── */
+.page h1 {
+  margin: 0 0 1.5rem;
+  color: #1e3a5f;
+  font-size: 1.75rem;
+}
+
+.page-loading {
+  padding: 3rem;
+  text-align: center;
+  color: #666;
+}
+
+/* ── Card ────────────────────────────────────────────────────── */
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  margin-bottom: 1.5rem;
+}
+
+.card h2 {
+  margin: 0 0 1.1rem;
+  font-size: 1.1rem;
+  color: #1e3a5f;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.1rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.btn-primary { background: #2d6aa0; color: #fff; }
+.btn-primary:hover:not(:disabled) { background: #1e3a5f; }
+
+.btn-secondary { background: #e0e0e0; color: #333; }
+.btn-secondary:hover { background: #ccc; }
+
+.btn-danger { background: #c62828; color: #fff; }
+.btn-danger:hover { background: #8b0000; }
+
+.btn-edit { background: #1565c0; color: #fff; }
+.btn-edit:hover { background: #0d47a1; }
+
+.btn-sm { padding: 0.3rem 0.7rem; font-size: 0.8rem; }
+
+/* ── Table ───────────────────────────────────────────────────── */
+.table-wrapper { overflow-x: auto; }
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.65rem 0.85rem;
+  text-align: left;
+  border-bottom: 1px solid #e8edf2;
+}
+
+.data-table th {
+  background: #f5f8fc;
+  color: #1e3a5f;
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.data-table tbody tr:hover { background: #f9fbfd; }
+
+.action-cell { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+/* ── Badges ──────────────────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.badge-success { background: #e8f5e9; color: #2e7d32; }
+.badge-warning { background: #fff3e0; color: #e65100; }
+
+/* ── Alert ───────────────────────────────────────────────────── */
+.alert {
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  background: #e8f5e9;
+  color: #2e7d32;
+  border-left: 4px solid #2e7d32;
+  font-size: 0.9rem;
+}
+
+.alert-error {
+  background: #ffebee;
+  color: #c62828;
+  border-color: #c62828;
+}
+
+/* ── Misc ────────────────────────────────────────────────────── */
+.empty { color: #888; font-style: italic; }
+
+.error {
+  color: #c62828;
+  font-size: 0.8rem;
+}
