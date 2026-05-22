@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from database import engine, Base
-from routers import tickets
+from routers import tickets, analytics, etl
 
 # Create all tables on startup
 Base.metadata.create_all(bind=engine)
@@ -23,6 +23,8 @@ app.add_middleware(
 
 # Include routers
 app.include_router(tickets.router)
+app.include_router(analytics.router)
+app.include_router(etl.router)
 
 
 @app.get("/")

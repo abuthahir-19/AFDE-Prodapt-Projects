@@ -61,6 +61,12 @@ const Navbar = () => {
         <Link to="/tickets/new" style={navLinkStyle('/tickets/new')}>
           + Create Ticket
         </Link>
+        <Link to="/analytics" style={navLinkStyle('/analytics')}>
+          Analytics
+        </Link>
+        <Link to="/etl" style={navLinkStyle('/etl')}>
+          ETL Import
+        </Link>
       </div>
     </nav>
   );

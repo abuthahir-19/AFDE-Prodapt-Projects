@@ -6,6 +6,8 @@ import TicketList from './pages/TicketList';
 import CreateTicket from './pages/CreateTicket';
 import TicketDetail from './pages/TicketDetail';
 import EditTicket from './pages/EditTicket';
+import Analytics from './pages/Analytics';
+import ETLImport from './pages/ETLImport';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
             <Route path="/tickets/new" element={<CreateTicket />} />
             <Route path="/tickets/:id" element={<TicketDetail />} />
             <Route path="/tickets/:id/edit" element={<EditTicket />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/etl" element={<ETLImport />} />
           </Routes>
         </main>
       </div>
