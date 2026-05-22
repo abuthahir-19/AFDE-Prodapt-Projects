@@ -94,6 +94,17 @@ Frontend runs at: http://localhost:3000
 | comments | TEXT | Optional |
 | submitted_at | DATETIME | Auto-set on insert |
 
+## Screenshots
+
+### Dashboard
+![Dashboard](images/dashboard.png)
+
+### Submit Feedback
+![Submit Feedback](images/new-feedback.png)
+
+### All Feedback
+![All Feedback](images/all-feedback.png)
+
 ## Features
 
 - Submit feedback with name, program, rating (1–5 stars), and comments
