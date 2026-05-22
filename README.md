@@ -1,80 +1,171 @@
-# Library Management System — Phase 1 & 2
+# Library Management System
 
-A full-stack web application for managing books, borrowers, and library transactions.
+A full-stack Library Management System built with **FastAPI** and **React**, featuring CRUD operations for books and borrowers, transaction tracking, a keyword search engine, and a Phase 2 ETL pipeline with an analytics dashboard.
 
-**Stack:** React (Vite) · FastAPI · SQLite · SQLAlchemy
+**Stack:** Python · FastAPI · SQLAlchemy · SQLite · React · Vite · Recharts · Pandas · Axios
+
+---
+
+## Screenshots
+
+### Dashboard
+![Dashboard](images/dashboard.png)
+> Live stat cards (Total Books, Available, Borrowed, Borrowers) and a recent-transactions table.
+
+### Book Management
+![Book Management](images/book-management.png)
+> Add, edit, and delete books. Availability status badge (Available / Borrowed) on every record.
+
+### Borrower Management
+![Borrower Management](images/borrower-management.png)
+> Register and manage library members with name, email, and phone. Inline edit and delete with form validation.
+
+### Borrow / Return
+![Borrow Return](images/borrow-return-page.png)
+> Two-panel form — issue a book to a borrower, or return an active transaction. Full transaction history table below.
+
+### Search Books
+![Search Books](images/search-books.png)
+> Keyword search across title, author, and category with instant results table.
+
+### Analytics Dashboard *(Phase 2)*
+![Analytics Dashboard](images/analytics-dashboard.png)
+> Bar chart (Top 10 most borrowed books), Pie chart (borrowing by category), Line chart (monthly trends), and an Overdue Transactions table.
+
+---
+
+## Features
+
+### Phase 1 — Core Library Management
+- **Dashboard** — real-time stats: total books, available, borrowed, total borrowers; last 5 transactions
+- **Book Management** — full CRUD (add, edit, delete, list); availability status tracking
+- **Borrower Management** — full CRUD; email format validation; unique email enforcement
+- **Borrow / Return** — issue books to registered borrowers; one-click return; prevents double-borrowing
+- **Search** — case-insensitive keyword search across title, author, and category
+- **Form Validation** — client-side required-field and format checks on all forms
+
+### Phase 2 — ETL Pipeline & Analytics
+- **ETL Pipeline** — extracts CSV datasets, removes duplicates and null records, loads clean data into SQLite
+- **Most Borrowed Books** — bar chart of top 10 titles ranked by borrow count
+- **Category Analytics** — pie chart showing borrowing distribution across 7 genres
+- **Monthly Trends** — line chart of borrow volume spanning Jan 2024 – May 2026
+- **Overdue Analysis** — table of all unreturned books past their 14-day due date with days-overdue counter
+
+---
+
+## Tech Stack
+
+### Backend
+| Component | Technology |
+|-----------|------------|
+| Language | Python 3.10+ |
+| Framework | FastAPI 0.115+ |
+| ORM | SQLAlchemy 2.0+ |
+| Database | SQLite (file-based) |
+| Validation | Pydantic 2.9+ |
+| ETL | Pandas 2.0+ |
+| Server | Uvicorn |
+
+### Frontend
+| Component | Technology |
+|-----------|------------|
+| Framework | React 18 |
+| Build Tool | Vite 5 |
+| Routing | React Router DOM 7 |
+| HTTP Client | Axios |
+| Charts | Recharts |
 
 ---
 
 ## Project Structure
 
 ```
-Library_Management_System/
+Library-Management-System/
 ├── data/
-│   ├── books.csv              # 50 book records (Phase 2 dataset)
-│   ├── borrowers.csv          # 30 borrower records (Phase 2 dataset)
-│   └── transactions.csv       # 200+ transaction records with dirty data
+│   ├── books.csv              # 50 book records across 7 categories
+│   ├── borrowers.csv          # 30 borrower records
+│   └── transactions.csv       # 200+ transaction records (includes dirty data)
+├── images/
+│   ├── dashboard.png
+│   ├── book-management.png
+│   ├── borrower-management.png
+│   ├── borrow-return-page.png
+│   ├── search-books.png
+│   └── analytics-dashboard.png
 ├── backend/
-│   ├── main.py                # FastAPI app entry point
-│   ├── database.py            # SQLAlchemy engine & session
-│   ├── models.py              # ORM models (Book, Borrower, Transaction)
+│   ├── main.py                # FastAPI app — routers, CORS, DB init
+│   ├── database.py            # SQLAlchemy engine, session, Base
+│   ├── models.py              # ORM models: Book, Borrower, Transaction
 │   ├── schemas.py             # Pydantic request/response schemas
 │   ├── crud.py                # Database CRUD operations
 │   ├── etl.py                 # ETL pipeline script (Phase 2)
-│   ├── routers/
-│   │   ├── books.py
-│   │   ├── borrowers.py
-│   │   ├── transactions.py
-│   │   ├── search.py
-│   │   └── analytics.py       # Analytics endpoints (Phase 2)
-│   └── requirements.txt
+│   ├── requirements.txt
+│   └── routers/
+│       ├── books.py
+│       ├── borrowers.py
+│       ├── transactions.py
+│       ├── search.py
+│       └── analytics.py       # Analytics endpoints (Phase 2)
 └── frontend/
+    ├── package.json
     └── src/
-        ├── components/        # Navbar
-        ├── pages/             # Dashboard, Books, Borrowers, BorrowReturn, Search, Analytics
-        ├── services/          # api.js (axios)
         ├── App.jsx
-        └── main.jsx
+        ├── main.jsx
+        ├── components/
+        │   └── Navbar.jsx
+        ├── pages/
+        │   ├── Dashboard.jsx
+        │   ├── Books.jsx
+        │   ├── Borrowers.jsx
+        │   ├── BorrowReturn.jsx
+        │   ├── Search.jsx
+        │   └── Analytics.jsx  # Phase 2
+        └── services/
+            └── api.js         # Axios API client
 ```
 
 ---
 
-## Setup & Installation
+## Prerequisites
 
-### Prerequisites
-- Python 3.10+
-- Node.js 18+ / npm
+- **Python** 3.10 or higher
+- **Node.js** 18 or higher / npm
 
 ---
 
-### Backend
+## Installation & Setup
+
+### 1. Clone the repository
+```bash
+git clone <repository-url>
+cd Library-Management-System
+```
+
+### 2. Backend setup
 
 ```bash
 cd backend
 
-# Create virtual environment
+# Create and activate virtual environment
 python -m venv venv
+venv\Scripts\activate        # Windows
+# source venv/bin/activate   # macOS / Linux
 
-# Activate (Windows)
-venv\Scripts\activate
-
-# Install dependencies (includes pandas for ETL)
+# Install dependencies
 pip install -r requirements.txt
 
-# (Phase 2) Run ETL pipeline to seed the database with sample data
-# Note: delete backend/library.db first if upgrading from Phase 1
+# Seed the database via the ETL pipeline
+# Loads 50 books, 30 borrowers, 203 transactions from the CSV files
 python etl.py
 
-# Start the server
+# Start the API server
 uvicorn main:app --reload --port 8000
 ```
 
-Backend runs at: http://localhost:8000  
-API docs (Swagger UI): http://localhost:8000/docs
+> **Note:** Always start the server from inside the `backend/` directory.  
+> Swagger UI (interactive API docs) available at: **http://localhost:8000/docs**
 
----
-
-### Frontend
+### 3. Frontend setup
 
 ```bash
 cd frontend
@@ -82,94 +173,154 @@ cd frontend
 # Install dependencies
 npm install
 
-# Start the dev server
+# Start the development server
 npm run dev
 ```
 
-Frontend runs at: http://localhost:5173
+> Frontend runs at: **http://localhost:5173**
+
+---
+
+## Running the Application
+
+Open **two terminals** from the project root:
+
+| Terminal | Directory | Command |
+|----------|-----------|---------|
+| Backend | `backend/` | `uvicorn main:app --reload --port 8000` |
+| Frontend | `frontend/` | `npm run dev` |
+
+Then open **http://localhost:5173** in your browser.
 
 ---
 
 ## API Reference
 
 ### Books
-| Method | Endpoint       | Description        |
-|--------|----------------|--------------------|
-| GET    | /books         | Get all books      |
-| GET    | /books/{id}    | Get book by ID     |
-| POST   | /books         | Add new book       |
-| PUT    | /books/{id}    | Update book        |
-| DELETE | /books/{id}    | Delete book        |
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/books` | Get all books |
+| GET | `/books/{id}` | Get book by ID |
+| POST | `/books` | Add a new book |
+| PUT | `/books/{id}` | Update a book |
+| DELETE | `/books/{id}` | Delete a book |
 
 ### Borrowers
-| Method | Endpoint           | Description          |
-|--------|--------------------|----------------------|
-| GET    | /borrowers         | Get all borrowers    |
-| POST   | /borrowers         | Add borrower         |
-| PUT    | /borrowers/{id}    | Update borrower      |
-| DELETE | /borrowers/{id}    | Delete borrower      |
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/borrowers` | Get all borrowers |
+| POST | `/borrowers` | Add a new borrower |
+| PUT | `/borrowers/{id}` | Update a borrower |
+| DELETE | `/borrowers/{id}` | Delete a borrower |
 
 ### Transactions
-| Method | Endpoint       | Description              |
-|--------|----------------|--------------------------|
-| POST   | /borrow        | Borrow a book            |
-| POST   | /return        | Return a book            |
-| GET    | /transactions  | View all transactions    |
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/borrow` | Borrow a book |
+| POST | `/return` | Return a book |
+| GET | `/transactions` | Get all transactions |
 
 ### Search
-| Method | Endpoint   | Description                              |
-|--------|------------|------------------------------------------|
-| GET    | /search?q= | Search books by title, author, category  |
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/search?q={keyword}` | Search books by title, author, or category |
 
-### Analytics (Phase 2)
-| Method | Endpoint                                  | Description                          |
-|--------|-------------------------------------------|--------------------------------------|
-| GET    | /analytics/most-borrowed-books?limit=10   | Top N most borrowed books            |
-| GET    | /analytics/category-stats                 | Borrow count per book category       |
-| GET    | /analytics/monthly-trends                 | Month-by-month borrow volume         |
-| GET    | /analytics/overdue-transactions           | All currently overdue transactions   |
+### Analytics *(Phase 2)*
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/analytics/most-borrowed-books?limit=10` | Top N most borrowed books |
+| GET | `/analytics/category-stats` | Borrow count per category |
+| GET | `/analytics/monthly-trends` | Month-by-month borrow volume |
+| GET | `/analytics/overdue-transactions` | All currently overdue transactions |
 
 ---
 
 ## Database Schema
 
-**books** — book_id, title, author, category, isbn, availability_status  
-**borrowers** — borrower_id, borrower_name, email, phone  
-**transactions** — transaction_id, book_id (FK), borrower_id (FK), borrow_date, due_date, return_date
+### `books`
+| Column | Type | Description |
+|--------|------|-------------|
+| book_id | INTEGER PK | Auto-increment primary key |
+| title | TEXT | Book title |
+| author | TEXT | Author name |
+| category | TEXT | Genre / category |
+| isbn | TEXT UNIQUE | ISBN identifier |
+| availability_status | TEXT | `available` or `borrowed` |
 
-SQLite database file (`library.db`) is auto-created in the `backend/` directory on first run.  
-Use the ETL script to seed it with sample data (see Setup above).
+### `borrowers`
+| Column | Type | Description |
+|--------|------|-------------|
+| borrower_id | INTEGER PK | Auto-increment primary key |
+| borrower_name | TEXT | Full name |
+| email | TEXT UNIQUE | Email address |
+| phone | TEXT | Contact number |
+
+### `transactions`
+| Column | Type | Description |
+|--------|------|-------------|
+| transaction_id | INTEGER PK | Auto-increment primary key |
+| book_id | INTEGER FK | References `books.book_id` |
+| borrower_id | INTEGER FK | References `borrowers.borrower_id` |
+| borrow_date | DATETIME | Date the book was borrowed |
+| due_date | DATETIME | Return deadline (borrow date + 14 days) |
+| return_date | DATETIME | Actual return date (`NULL` if still active) |
+
+The SQLite database file (`library.db`) is created automatically in `backend/` on first run.
 
 ---
 
-## Phase 2: ETL Pipeline & Analytics
+## Phase 2: ETL Pipeline
 
-### ETL Workflow
-The ETL pipeline (`backend/etl.py`) processes three CSV files from the `data/` directory:
+The ETL script (`backend/etl.py`) processes three CSV files from the `data/` directory.
 
-1. **Extract** — reads `books.csv`, `borrowers.csv`, `transactions.csv` into DataFrames
-2. **Transform** — removes duplicate records (by isbn / email / transaction_id), drops rows with missing required fields, parses datetime columns, and computes `due_date` if absent
-3. **Load** — upserts clean records into the SQLite database using SQLAlchemy
+### Pipeline Steps
 
-The dataset intentionally includes dirty data (duplicate rows, null borrower IDs, missing borrow dates) to demonstrate the transformation step.
+| Step | Action |
+|------|--------|
+| **Extract** | Reads `books.csv`, `borrowers.csv`, `transactions.csv` into Pandas DataFrames |
+| **Transform** | Removes duplicate records (by `isbn` / `email` / `transaction_id`), drops rows missing required fields, parses datetime columns, computes `due_date` where absent |
+| **Load** | Upserts cleaned records into SQLite using `db.merge()` (insert-or-update by primary key) |
 
-### Analytics Dashboard
-Navigate to `/analytics` in the running frontend to view:
-- **Bar chart** — Top 10 most borrowed books
-- **Pie chart** — Borrowing distribution by category
-- **Line chart** — Monthly borrowing trends (spanning 2024–2026)
-- **Overdue table** — All transactions past their due date, with days overdue counter
+### Dirty Data Handling
+The CSV dataset intentionally includes:
+- 3 duplicate `transaction_id` entries
+- 3 rows with a null `borrower_id`
+- 2 rows with a missing `borrow_date`
+
+These are detected and removed during the Transform step, demonstrating real-world ETL data cleaning.
+
+### Running the ETL
+
+```bash
+cd backend
+python etl.py
+```
+
+Expected output:
+```
+========== ETL Pipeline Start ==========
+[EXTRACT] books.csv: 50 rows, 6 columns
+[EXTRACT] borrowers.csv: 30 rows, 4 columns
+[EXTRACT] transactions.csv: 208 rows, 6 columns
+[TRANSFORM] books: 50 -> 50 rows (removed 0 dirty rows)
+[TRANSFORM] borrowers: 30 -> 30 rows (removed 0 dirty rows)
+[TRANSFORM] transactions: 208 -> 203 rows (removed 5 dirty rows)
+[LOAD] Loaded 50 books into database
+[LOAD] Loaded 30 borrowers into database
+[LOAD] Loaded 203 transactions into database
+========== ETL Pipeline Complete ==========
+```
 
 ---
 
-## Features
+## Dataset
 
-- **Dashboard** — live stats (total books, available, borrowed, borrower count) + recent transactions
-- **Book Management** — add, edit, delete, view all books with availability status
-- **Borrower Management** — add, edit, delete, view all borrowers
-- **Borrow / Return** — issue books to borrowers, return with one click, full transaction history
-- **Search** — keyword search across title, author, and category
-- **Analytics** *(Phase 2)* — borrowing insights, trends, and overdue reporting with Recharts charts
-- **ETL Pipeline** *(Phase 2)* — import and clean sample datasets into the database
-- **Form Validation** — client-side validation on all forms
-- **Responsive UI** — works on desktop and mobile
+| File | Records | Columns |
+|------|---------|---------|
+| `data/books.csv` | 50 | book_id, title, author, category, isbn, availability_status |
+| `data/borrowers.csv` | 30 | borrower_id, borrower_name, email, phone |
+| `data/transactions.csv` | 208 (raw) / 203 (clean) | transaction_id, book_id, borrower_id, borrow_date, due_date, return_date |
+
+**Book categories:** Fiction · Non-Fiction · Science · Technology · History · Biography · Self-Help · Philosophy
+
+Transactions span **January 2024 – May 2026**, providing 18+ months of data for the analytics charts.
