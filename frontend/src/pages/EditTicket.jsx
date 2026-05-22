@@ -1,51 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getTicketById, updateTicket } from '../services/ticketService';
+import { PersonIcon, BuildingIcon, TagIcon, DescriptionIcon, PriorityIcon, StatusIcon, NoteIcon, EditIcon, BackIcon } from '../components/Icons';
 
-const ISSUE_CATEGORIES = [
-  'VPN Issue',
-  'Password Reset',
-  'Software Installation',
-  'Laptop Issue',
-  'Email Access',
-  'Network Connectivity',
-  'Hardware Request',
-];
-
+const ISSUE_CATEGORIES = ['VPN Issue', 'Password Reset', 'Software Installation', 'Laptop Issue', 'Email Access', 'Network Connectivity', 'Hardware Request'];
 const PRIORITIES = ['Low', 'Medium', 'High', 'Critical'];
 const STATUSES = ['Open', 'In Progress', 'Resolved', 'Closed'];
 
-const inputStyle = {
-  width: '100%',
-  padding: '10px 12px',
-  border: '1px solid #ddd',
-  borderRadius: '6px',
-  fontSize: '14px',
-  color: '#333',
-  outline: 'none',
-  transition: 'border-color 0.2s',
-};
+const PRIORITY_COLORS = { Low: '#16a34a', Medium: '#d97706', High: '#dc2626', Critical: '#7c3aed' };
+const STATUS_COLORS   = { 'Open': '#1d4ed8', 'In Progress': '#b45309', 'Resolved': '#15803d', 'Closed': '#475569' };
 
-const labelStyle = {
-  display: 'block',
-  fontSize: '14px',
-  fontWeight: '600',
-  color: '#444',
-  marginBottom: '6px',
+const FieldLabel = ({ icon, text, required }) => (
+  <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: '600', color: '#374151', marginBottom: '7px' }}>
+    <span style={{ color: '#64748b' }}>{icon}</span>
+    {text}
+    {required && <span style={{ color: '#ef4444', marginLeft: '1px' }}>*</span>}
+  </label>
+);
+
+const inputBase = {
+  width: '100%', padding: '10px 13px',
+  border: '1.5px solid #e2e8f0', borderRadius: '9px',
+  fontSize: '14px', color: '#1e293b', outline: 'none',
+  transition: 'border-color 0.15s, box-shadow 0.15s',
+  fontFamily: 'inherit', backgroundColor: '#fff',
 };
 
 const EditTicket = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [form, setForm] = useState({
-    employee_name: '',
-    department: '',
-    issue_category: '',
-    description: '',
-    priority: '',
-    status: '',
-    resolution_notes: '',
-  });
+  const [form, setForm] = useState({ employee_name: '', department: '', issue_category: '', description: '', priority: '', status: '', resolution_notes: '' });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -54,7 +38,7 @@ const EditTicket = () => {
   const [successMsg, setSuccessMsg] = useState('');
 
   useEffect(() => {
-    const fetchTicket = async () => {
+    const load = async () => {
       try {
         const data = await getTicketById(id);
         setForm({
@@ -67,340 +51,181 @@ const EditTicket = () => {
           resolution_notes: data.resolution_notes || '',
         });
       } catch (err) {
-        setFetchError(
-          err.response?.status === 404
-            ? `Ticket #${id} not found.`
-            : 'Failed to load ticket data.'
-        );
+        setFetchError(err.response?.status === 404 ? `Ticket #${id} not found.` : 'Failed to load ticket.');
       } finally {
         setLoading(false);
       }
     };
-    fetchTicket();
+    load();
   }, [id]);
 
   const validate = () => {
-    const newErrors = {};
-    if (!form.employee_name.trim()) newErrors.employee_name = 'Employee name is required.';
-    if (!form.department.trim()) newErrors.department = 'Department is required.';
-    if (!form.issue_category) newErrors.issue_category = 'Please select an issue category.';
-    if (!form.description.trim()) newErrors.description = 'Description is required.';
-    if (!form.priority) newErrors.priority = 'Please select a priority.';
-    if (!form.status) newErrors.status = 'Please select a status.';
-    return newErrors;
+    const e = {};
+    if (!form.employee_name.trim()) e.employee_name = 'Required.';
+    if (!form.department.trim()) e.department = 'Required.';
+    if (!form.issue_category) e.issue_category = 'Please select a category.';
+    if (!form.description.trim()) e.description = 'Required.';
+    if (!form.priority) e.priority = 'Please select a priority.';
+    if (!form.status) e.status = 'Please select a status.';
+    return e;
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: '' }));
-    }
+    setForm((p) => ({ ...p, [name]: value }));
+    if (errors[name]) setErrors((p) => ({ ...p, [name]: '' }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-
+    const errs = validate();
+    if (Object.keys(errs).length) { setErrors(errs); return; }
     setSubmitting(true);
     setServerError('');
-
     try {
-      const payload = {
-        ...form,
-        resolution_notes: form.resolution_notes || null,
-      };
-      await updateTicket(id, payload);
-      setSuccessMsg('Ticket updated successfully! Redirecting...');
-      setTimeout(() => {
-        navigate(`/tickets/${id}`);
-      }, 1500);
-    } catch (err) {
+      await updateTicket(id, { ...form, resolution_notes: form.resolution_notes || null });
+      setSuccessMsg('Ticket updated successfully! Redirecting…');
+      setTimeout(() => navigate(`/tickets/${id}`), 1400);
+    } catch {
       setServerError('Failed to update ticket. Please try again.');
     } finally {
       setSubmitting(false);
     }
   };
 
+  const focusBind = (name) => ({
+    onFocus: (e) => { e.target.style.borderColor = '#1976d2'; e.target.style.boxShadow = '0 0 0 3px rgba(25,118,210,0.12)'; },
+    onBlur:  (e) => { e.target.style.borderColor = errors[name] ? '#ef4444' : '#e2e8f0'; e.target.style.boxShadow = 'none'; },
+  });
+
+  const Field = ({ name, error, children }) => (
+    <div style={{ marginBottom: '20px' }}>
+      {children}
+      {error && <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '5px' }}>⚠ {error}</p>}
+    </div>
+  );
+
+  const fStyle = (name) => ({ ...inputBase, borderColor: errors[name] ? '#ef4444' : '#e2e8f0' });
+
   if (loading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
-        <p style={{ color: '#666' }}>Loading ticket...</p>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '60vh', gap: '12px' }}>
+        <div style={{ width: '36px', height: '36px', border: '3px solid #e2e8f0', borderTop: '3px solid #1976d2', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+        <p style={{ color: '#64748b', fontSize: '14px' }}>Loading ticket…</p>
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     );
   }
 
   if (fetchError) {
     return (
-      <div style={{ padding: '32px', maxWidth: '700px', margin: '0 auto' }}>
-        <div
-          style={{
-            backgroundColor: '#ffebee',
-            border: '1px solid #ef9a9a',
-            color: '#c62828',
-            padding: '16px',
-            borderRadius: '6px',
-            marginBottom: '16px',
-          }}
-        >
-          {fetchError}
-        </div>
-        <Link to="/tickets" style={{ color: '#1976d2', textDecoration: 'none', fontSize: '14px' }}>
-          ← Back to Tickets
-        </Link>
+      <div style={{ padding: '32px', maxWidth: '760px', margin: '0 auto' }}>
+        <div style={{ backgroundColor: '#fef2f2', border: '1px solid #fecaca', color: '#dc2626', padding: '16px', borderRadius: '10px', marginBottom: '16px' }}>{fetchError}</div>
+        <Link to="/tickets" style={{ color: '#1976d2', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '5px' }}><BackIcon size={14} /> Back to Tickets</Link>
       </div>
     );
   }
 
   return (
-    <div style={{ padding: '32px', maxWidth: '700px', margin: '0 auto' }}>
+    <div style={{ padding: '28px 32px', maxWidth: '760px', margin: '0 auto' }}>
+
+      {/* Header */}
       <div style={{ marginBottom: '24px' }}>
-        <Link
-          to={`/tickets/${id}`}
-          style={{ fontSize: '13px', color: '#1976d2', textDecoration: 'none' }}
-        >
-          ← Back to Ticket #{id}
+        <Link to={`/tickets/${id}`} style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '13px', color: '#1976d2', fontWeight: '500', marginBottom: '12px' }}>
+          <BackIcon size={14} /> Back to Ticket #{id}
         </Link>
-        <h1 style={{ fontSize: '24px', fontWeight: '700', color: '#1a1a1a', marginTop: '8px' }}>
-          Edit Ticket #{id}
-        </h1>
-        <p style={{ color: '#666', marginTop: '4px', fontSize: '14px' }}>
-          Update the ticket information below.
-        </p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{ width: '42px', height: '42px', borderRadius: '11px', backgroundColor: '#e0f2fe', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0369a1' }}>
+            <EditIcon size={20} />
+          </div>
+          <div>
+            <h1 style={{ fontSize: '22px', fontWeight: '800', color: '#0f172a' }}>Edit Ticket #{id}</h1>
+            <p style={{ color: '#64748b', fontSize: '13px', marginTop: '2px' }}>Update the ticket information below.</p>
+          </div>
+        </div>
       </div>
 
+      {/* Alerts */}
       {successMsg && (
-        <div
-          style={{
-            backgroundColor: '#e8f5e9',
-            border: '1px solid #a5d6a7',
-            color: '#2e7d32',
-            padding: '12px 16px',
-            borderRadius: '6px',
-            marginBottom: '20px',
-            fontWeight: '500',
-          }}
-        >
-          {successMsg}
+        <div style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', color: '#15803d', padding: '12px 16px', borderRadius: '10px', marginBottom: '20px', fontSize: '14px', fontWeight: '500' }}>
+          ✅ {successMsg}
         </div>
       )}
-
       {serverError && (
-        <div
-          style={{
-            backgroundColor: '#ffebee',
-            border: '1px solid #ef9a9a',
-            color: '#c62828',
-            padding: '12px 16px',
-            borderRadius: '6px',
-            marginBottom: '20px',
-          }}
-        >
-          {serverError}
+        <div style={{ backgroundColor: '#fef2f2', border: '1px solid #fecaca', color: '#dc2626', padding: '12px 16px', borderRadius: '10px', marginBottom: '20px', fontSize: '14px' }}>
+          ⚠️ {serverError}
         </div>
       )}
 
-      <div
-        style={{
-          backgroundColor: '#fff',
-          borderRadius: '8px',
-          padding: '32px',
-          boxShadow: '0 1px 4px rgba(0,0,0,0.1)',
-        }}
-      >
+      {/* Form Card */}
+      <div style={{ backgroundColor: '#fff', borderRadius: '16px', padding: '32px', boxShadow: '0 1px 3px rgba(0,0,0,0.07), 0 4px 16px rgba(0,0,0,0.04)', border: '1px solid #f1f5f9' }}>
         <form onSubmit={handleSubmit}>
-          {/* Employee Name */}
-          <div style={{ marginBottom: '20px' }}>
-            <label style={labelStyle}>
-              Employee Name <span style={{ color: '#e53935' }}>*</span>
-            </label>
-            <input
-              type="text"
-              name="employee_name"
-              value={form.employee_name}
-              onChange={handleChange}
-              style={{
-                ...inputStyle,
-                borderColor: errors.employee_name ? '#e53935' : '#ddd',
-              }}
-              onFocus={(e) => (e.target.style.borderColor = '#1976d2')}
-              onBlur={(e) =>
-                (e.target.style.borderColor = errors.employee_name ? '#e53935' : '#ddd')
-              }
-            />
-            {errors.employee_name && (
-              <p style={{ color: '#e53935', fontSize: '12px', marginTop: '4px' }}>
-                {errors.employee_name}
-              </p>
-            )}
+
+          {/* Row 1 */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+            <Field name="employee_name" error={errors.employee_name}>
+              <FieldLabel icon={<PersonIcon size={14} />} text="Employee Name" required />
+              <input type="text" name="employee_name" value={form.employee_name} onChange={handleChange} style={fStyle('employee_name')} {...focusBind('employee_name')} />
+            </Field>
+            <Field name="department" error={errors.department}>
+              <FieldLabel icon={<BuildingIcon size={14} />} text="Department" required />
+              <input type="text" name="department" value={form.department} onChange={handleChange} style={fStyle('department')} {...focusBind('department')} />
+            </Field>
           </div>
 
-          {/* Department */}
-          <div style={{ marginBottom: '20px' }}>
-            <label style={labelStyle}>
-              Department <span style={{ color: '#e53935' }}>*</span>
-            </label>
-            <input
-              type="text"
-              name="department"
-              value={form.department}
-              onChange={handleChange}
-              style={{
-                ...inputStyle,
-                borderColor: errors.department ? '#e53935' : '#ddd',
-              }}
-              onFocus={(e) => (e.target.style.borderColor = '#1976d2')}
-              onBlur={(e) =>
-                (e.target.style.borderColor = errors.department ? '#e53935' : '#ddd')
-              }
-            />
-            {errors.department && (
-              <p style={{ color: '#e53935', fontSize: '12px', marginTop: '4px' }}>
-                {errors.department}
-              </p>
-            )}
+          {/* Row 2 */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+            <Field name="issue_category" error={errors.issue_category}>
+              <FieldLabel icon={<TagIcon size={14} />} text="Issue Category" required />
+              <select name="issue_category" value={form.issue_category} onChange={handleChange} style={{ ...fStyle('issue_category'), cursor: 'pointer' }} {...focusBind('issue_category')}>
+                <option value="">— Select Category —</option>
+                {ISSUE_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+              </select>
+            </Field>
+            <Field name="priority" error={errors.priority}>
+              <FieldLabel icon={<PriorityIcon size={14} />} text="Priority" required />
+              <select name="priority" value={form.priority} onChange={handleChange}
+                style={{ ...fStyle('priority'), cursor: 'pointer', color: form.priority ? PRIORITY_COLORS[form.priority] : '#1e293b', fontWeight: form.priority ? '600' : '400' }}
+                {...focusBind('priority')}>
+                <option value="">— Select Priority —</option>
+                {PRIORITIES.map((p) => <option key={p} value={p}>{p}</option>)}
+              </select>
+            </Field>
           </div>
 
-          {/* Issue Category */}
-          <div style={{ marginBottom: '20px' }}>
-            <label style={labelStyle}>
-              Issue Category <span style={{ color: '#e53935' }}>*</span>
-            </label>
-            <select
-              name="issue_category"
-              value={form.issue_category}
-              onChange={handleChange}
-              style={{
-                ...inputStyle,
-                borderColor: errors.issue_category ? '#e53935' : '#ddd',
-                backgroundColor: '#fff',
-                cursor: 'pointer',
-              }}
-            >
-              <option value="">-- Select Category --</option>
-              {ISSUE_CATEGORIES.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
-                </option>
-              ))}
-            </select>
-            {errors.issue_category && (
-              <p style={{ color: '#e53935', fontSize: '12px', marginTop: '4px' }}>
-                {errors.issue_category}
-              </p>
-            )}
+          {/* Row 3 */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+            <Field name="status" error={errors.status}>
+              <FieldLabel icon={<StatusIcon size={14} />} text="Status" required />
+              <select name="status" value={form.status} onChange={handleChange}
+                style={{ ...fStyle('status'), cursor: 'pointer', color: form.status ? STATUS_COLORS[form.status] : '#1e293b', fontWeight: form.status ? '600' : '400' }}
+                {...focusBind('status')}>
+                <option value="">— Select Status —</option>
+                {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
+              </select>
+            </Field>
+            <div />
           </div>
 
           {/* Description */}
-          <div style={{ marginBottom: '20px' }}>
-            <label style={labelStyle}>
-              Description <span style={{ color: '#e53935' }}>*</span>
-            </label>
-            <textarea
-              name="description"
-              value={form.description}
-              onChange={handleChange}
-              rows={4}
-              style={{
-                ...inputStyle,
-                borderColor: errors.description ? '#e53935' : '#ddd',
-                resize: 'vertical',
-                fontFamily: 'inherit',
-              }}
-              onFocus={(e) => (e.target.style.borderColor = '#1976d2')}
-              onBlur={(e) =>
-                (e.target.style.borderColor = errors.description ? '#e53935' : '#ddd')
-              }
-            />
-            {errors.description && (
-              <p style={{ color: '#e53935', fontSize: '12px', marginTop: '4px' }}>
-                {errors.description}
-              </p>
-            )}
-          </div>
-
-          {/* Priority */}
-          <div style={{ marginBottom: '20px' }}>
-            <label style={labelStyle}>
-              Priority <span style={{ color: '#e53935' }}>*</span>
-            </label>
-            <select
-              name="priority"
-              value={form.priority}
-              onChange={handleChange}
-              style={{
-                ...inputStyle,
-                borderColor: errors.priority ? '#e53935' : '#ddd',
-                backgroundColor: '#fff',
-                cursor: 'pointer',
-              }}
-            >
-              <option value="">-- Select Priority --</option>
-              {PRIORITIES.map((p) => (
-                <option key={p} value={p}>
-                  {p}
-                </option>
-              ))}
-            </select>
-            {errors.priority && (
-              <p style={{ color: '#e53935', fontSize: '12px', marginTop: '4px' }}>
-                {errors.priority}
-              </p>
-            )}
-          </div>
-
-          {/* Status */}
-          <div style={{ marginBottom: '20px' }}>
-            <label style={labelStyle}>
-              Status <span style={{ color: '#e53935' }}>*</span>
-            </label>
-            <select
-              name="status"
-              value={form.status}
-              onChange={handleChange}
-              style={{
-                ...inputStyle,
-                borderColor: errors.status ? '#e53935' : '#ddd',
-                backgroundColor: '#fff',
-                cursor: 'pointer',
-              }}
-            >
-              <option value="">-- Select Status --</option>
-              {STATUSES.map((s) => (
-                <option key={s} value={s}>
-                  {s}
-                </option>
-              ))}
-            </select>
-            {errors.status && (
-              <p style={{ color: '#e53935', fontSize: '12px', marginTop: '4px' }}>
-                {errors.status}
-              </p>
-            )}
-          </div>
+          <Field name="description" error={errors.description}>
+            <FieldLabel icon={<DescriptionIcon size={14} />} text="Description" required />
+            <textarea name="description" value={form.description} onChange={handleChange} rows={4}
+              style={{ ...fStyle('description'), resize: 'vertical' }} {...focusBind('description')} />
+          </Field>
 
           {/* Resolution Notes */}
-          <div style={{ marginBottom: '28px' }}>
-            <label style={labelStyle}>Resolution Notes</label>
-            <textarea
-              name="resolution_notes"
-              value={form.resolution_notes}
-              onChange={handleChange}
-              rows={3}
-              placeholder="Add resolution notes (optional)..."
-              style={{
-                ...inputStyle,
-                resize: 'vertical',
-                fontFamily: 'inherit',
-              }}
-              onFocus={(e) => (e.target.style.borderColor = '#1976d2')}
-              onBlur={(e) => (e.target.style.borderColor = '#ddd')}
+          <Field name="resolution_notes" error={null}>
+            <FieldLabel icon={<NoteIcon size={14} />} text="Resolution Notes" />
+            <textarea name="resolution_notes" value={form.resolution_notes} onChange={handleChange} rows={3}
+              placeholder="Add resolution details (optional)…"
+              style={{ ...inputBase, borderColor: '#e2e8f0' }}
+              onFocus={(e) => { e.target.style.borderColor = '#1976d2'; e.target.style.boxShadow = '0 0 0 3px rgba(25,118,210,0.12)'; }}
+              onBlur={(e) => { e.target.style.borderColor = '#e2e8f0'; e.target.style.boxShadow = 'none'; }}
             />
-          </div>
+          </Field>
+
+          <div style={{ borderTop: '1px solid #f1f5f9', margin: '8px 0 24px' }} />
 
           {/* Buttons */}
           <div style={{ display: 'flex', gap: '12px' }}>
@@ -408,31 +233,26 @@ const EditTicket = () => {
               type="submit"
               disabled={submitting}
               style={{
-                backgroundColor: submitting ? '#90caf9' : '#1976d2',
-                color: '#fff',
-                padding: '10px 24px',
-                border: 'none',
-                borderRadius: '6px',
-                fontSize: '14px',
-                fontWeight: '600',
+                display: 'flex', alignItems: 'center', gap: '6px',
+                backgroundColor: submitting ? '#93c5fd' : '#1976d2',
+                color: '#fff', padding: '11px 26px',
+                border: 'none', borderRadius: '9px',
+                fontSize: '14px', fontWeight: '700',
                 cursor: submitting ? 'not-allowed' : 'pointer',
+                boxShadow: submitting ? 'none' : '0 2px 8px rgba(25,118,210,0.30)',
+                fontFamily: 'inherit', transition: 'all 0.15s',
               }}
+              onMouseEnter={(e) => { if (!submitting) e.currentTarget.style.backgroundColor = '#1565c0'; }}
+              onMouseLeave={(e) => { if (!submitting) e.currentTarget.style.backgroundColor = '#1976d2'; }}
             >
-              {submitting ? 'Saving...' : 'Save Changes'}
+              {submitting ? '⏳ Saving…' : <><EditIcon size={14} /> Save Changes</>}
             </button>
             <button
               type="button"
               onClick={() => navigate(`/tickets/${id}`)}
-              style={{
-                backgroundColor: '#fff',
-                color: '#666',
-                padding: '10px 24px',
-                border: '1px solid #ddd',
-                borderRadius: '6px',
-                fontSize: '14px',
-                fontWeight: '600',
-                cursor: 'pointer',
-              }}
+              style={{ backgroundColor: '#f8fafc', color: '#475569', padding: '11px 24px', border: '1.5px solid #e2e8f0', borderRadius: '9px', fontSize: '14px', fontWeight: '600', cursor: 'pointer', fontFamily: 'inherit' }}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#f1f5f9')}
+              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#f8fafc')}
             >
               Cancel
             </button>

@@ -3,27 +3,47 @@ import { Link, useNavigate } from 'react-router-dom';
 import { getAllTickets } from '../services/ticketService';
 import StatusBadge from '../components/StatusBadge';
 import PriorityBadge from '../components/PriorityBadge';
+import { AddIcon, TicketsIcon, ClockIcon } from '../components/Icons';
 
-const StatCard = ({ title, count, color, icon }) => (
+const StatCard = ({ title, count, color, bgColor, icon }) => (
   <div
     style={{
       backgroundColor: '#fff',
-      borderRadius: '8px',
-      padding: '24px',
-      boxShadow: '0 1px 4px rgba(0,0,0,0.1)',
-      borderTop: `4px solid ${color}`,
+      borderRadius: '14px',
+      padding: '22px 24px',
+      boxShadow: '0 1px 3px rgba(0,0,0,0.07), 0 4px 16px rgba(0,0,0,0.04)',
       flex: '1',
       minWidth: '150px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '16px',
+      border: '1px solid #f1f5f9',
+      transition: 'box-shadow 0.2s',
     }}
+    onMouseEnter={(e) => (e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.10)')}
+    onMouseLeave={(e) => (e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.07), 0 4px 16px rgba(0,0,0,0.04)')}
   >
-    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <div>
-        <p style={{ fontSize: '13px', color: '#888', fontWeight: '500', marginBottom: '8px' }}>
-          {title}
-        </p>
-        <p style={{ fontSize: '32px', fontWeight: '700', color: '#1a1a1a' }}>{count}</p>
-      </div>
-      <span style={{ fontSize: '32px', opacity: 0.7 }}>{icon}</span>
+    <div
+      style={{
+        width: '48px',
+        height: '48px',
+        borderRadius: '12px',
+        backgroundColor: bgColor,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: color,
+        fontSize: '22px',
+        flexShrink: 0,
+      }}
+    >
+      {icon}
+    </div>
+    <div>
+      <p style={{ fontSize: '12px', color: '#94a3b8', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px' }}>
+        {title}
+      </p>
+      <p style={{ fontSize: '28px', fontWeight: '800', color: '#0f172a', lineHeight: '1' }}>{count}</p>
     </div>
   </div>
 );
@@ -43,7 +63,7 @@ const Dashboard = () => {
       setLoading(true);
       const data = await getAllTickets();
       setTickets(data);
-    } catch (err) {
+    } catch {
       setError('Failed to load tickets. Make sure the backend is running.');
     } finally {
       setLoading(false);
@@ -55,178 +75,165 @@ const Dashboard = () => {
     open: tickets.filter((t) => t.status === 'Open').length,
     inProgress: tickets.filter((t) => t.status === 'In Progress').length,
     resolved: tickets.filter((t) => t.status === 'Resolved').length,
+    closed: tickets.filter((t) => t.status === 'Closed').length,
   };
 
   const recentTickets = [...tickets]
     .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
     .slice(0, 5);
 
-  const formatDate = (dateStr) => {
-    return new Date(dateStr).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
-  };
+  const formatDate = (dateStr) =>
+    new Date(dateStr).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 
   if (loading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
-        <p style={{ color: '#666', fontSize: '16px' }}>Loading dashboard...</p>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '60vh', gap: '12px' }}>
+        <div style={{ width: '36px', height: '36px', border: '3px solid #e2e8f0', borderTop: '3px solid #1976d2', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+        <p style={{ color: '#64748b', fontSize: '14px' }}>Loading dashboard…</p>
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     );
   }
 
   return (
-    <div style={{ padding: '32px', maxWidth: '1200px', margin: '0 auto' }}>
-      <div style={{ marginBottom: '28px' }}>
-        <h1 style={{ fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Dashboard</h1>
-        <p style={{ color: '#666', marginTop: '4px' }}>Welcome to the Helpdesk Ticket Management System</p>
+    <div style={{ padding: '28px 32px', maxWidth: '1200px', margin: '0 auto' }}>
+
+      {/* Hero Banner */}
+      <div
+        style={{
+          background: 'linear-gradient(135deg, #1251a3 0%, #1976d2 55%, #29b6f6 100%)',
+          borderRadius: '16px',
+          padding: '28px 32px',
+          marginBottom: '28px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '16px',
+          boxShadow: '0 4px 24px rgba(25,118,210,0.28)',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        {/* Decorative circles */}
+        <div style={{ position: 'absolute', top: '-30px', right: '120px', width: '120px', height: '120px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.06)' }} />
+        <div style={{ position: 'absolute', bottom: '-20px', right: '60px', width: '80px', height: '80px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.08)' }} />
+
+        <div style={{ position: 'relative' }}>
+          <h1 style={{ color: '#fff', fontSize: '22px', fontWeight: '800', marginBottom: '6px', letterSpacing: '-0.2px' }}>
+            Welcome to Helpdesk Dashboard 👋
+          </h1>
+          <p style={{ color: 'rgba(255,255,255,0.78)', fontSize: '14px', fontWeight: '400' }}>
+            Track, manage and resolve all your IT support tickets in one place.
+          </p>
+        </div>
+        <div style={{ display: 'flex', gap: '10px', position: 'relative' }}>
+          <Link
+            to="/tickets/new"
+            style={{
+              display: 'flex', alignItems: 'center', gap: '6px',
+              backgroundColor: '#fff', color: '#1565c0',
+              padding: '9px 18px', borderRadius: '8px',
+              fontWeight: '700', fontSize: '13px',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+            }}
+          >
+            <AddIcon size={15} /> Create Ticket
+          </Link>
+          <Link
+            to="/tickets"
+            style={{
+              display: 'flex', alignItems: 'center', gap: '6px',
+              backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff',
+              padding: '9px 18px', borderRadius: '8px',
+              fontWeight: '600', fontSize: '13px',
+              border: '1px solid rgba(255,255,255,0.3)',
+            }}
+          >
+            <TicketsIcon size={15} /> View All
+          </Link>
+        </div>
       </div>
 
+      {/* Error */}
       {error && (
-        <div
-          style={{
-            backgroundColor: '#ffebee',
-            border: '1px solid #ef9a9a',
-            color: '#c62828',
-            padding: '12px 16px',
-            borderRadius: '6px',
-            marginBottom: '24px',
-          }}
-        >
-          {error}
+        <div style={{ backgroundColor: '#fef2f2', border: '1px solid #fecaca', color: '#dc2626', padding: '12px 16px', borderRadius: '10px', marginBottom: '24px', fontSize: '14px' }}>
+          ⚠️ {error}
         </div>
       )}
 
       {/* Stat Cards */}
-      <div style={{ display: 'flex', gap: '16px', marginBottom: '32px', flexWrap: 'wrap' }}>
-        <StatCard title="Total Tickets" count={stats.total} color="#1976d2" icon="🎫" />
-        <StatCard title="Open" count={stats.open} color="#2196f3" icon="📂" />
-        <StatCard title="In Progress" count={stats.inProgress} color="#ff9800" icon="⚙️" />
-        <StatCard title="Resolved" count={stats.resolved} color="#4caf50" icon="✅" />
+      <div style={{ display: 'flex', gap: '16px', marginBottom: '28px', flexWrap: 'wrap' }}>
+        <StatCard title="Total Tickets"  count={stats.total}      color="#1976d2" bgColor="#dbeafe" icon="🎫" />
+        <StatCard title="Open"           count={stats.open}       color="#2563eb" bgColor="#eff6ff" icon="📂" />
+        <StatCard title="In Progress"    count={stats.inProgress} color="#d97706" bgColor="#fffbeb" icon="⚙️" />
+        <StatCard title="Resolved"       count={stats.resolved}   color="#16a34a" bgColor="#f0fdf4" icon="✅" />
+        <StatCard title="Closed"         count={stats.closed}     color="#475569" bgColor="#f8fafc" icon="🔒" />
       </div>
 
-      {/* Quick Actions */}
-      <div style={{ display: 'flex', gap: '12px', marginBottom: '32px' }}>
-        <Link
-          to="/tickets/new"
-          style={{
-            backgroundColor: '#1976d2',
-            color: '#fff',
-            padding: '10px 20px',
-            borderRadius: '6px',
-            textDecoration: 'none',
-            fontWeight: '600',
-            fontSize: '14px',
-          }}
-        >
-          + Create New Ticket
-        </Link>
-        <Link
-          to="/tickets"
-          style={{
-            backgroundColor: '#fff',
-            color: '#1976d2',
-            padding: '10px 20px',
-            borderRadius: '6px',
-            textDecoration: 'none',
-            fontWeight: '600',
-            fontSize: '14px',
-            border: '1px solid #1976d2',
-          }}
-        >
-          View All Tickets
-        </Link>
-      </div>
-
-      {/* Recent Tickets Table */}
-      <div
-        style={{
-          backgroundColor: '#fff',
-          borderRadius: '8px',
-          boxShadow: '0 1px 4px rgba(0,0,0,0.1)',
-          overflow: 'hidden',
-        }}
-      >
-        <div
-          style={{
-            padding: '16px 24px',
-            borderBottom: '1px solid #e0e0e0',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <h2 style={{ fontSize: '16px', fontWeight: '600', color: '#1a1a1a' }}>
-            Recent Tickets
-          </h2>
-          <Link to="/tickets" style={{ fontSize: '13px', color: '#1976d2', textDecoration: 'none' }}>
+      {/* Recent Tickets */}
+      <div style={{ backgroundColor: '#fff', borderRadius: '14px', boxShadow: '0 1px 3px rgba(0,0,0,0.07), 0 4px 16px rgba(0,0,0,0.04)', overflow: 'hidden', border: '1px solid #f1f5f9' }}>
+        <div style={{ padding: '18px 24px', borderBottom: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <ClockIcon size={16} style={{ color: '#64748b' }} />
+            <h2 style={{ fontSize: '15px', fontWeight: '700', color: '#0f172a' }}>Recent Tickets</h2>
+            <span style={{ backgroundColor: '#f1f5f9', color: '#64748b', fontSize: '11px', fontWeight: '600', padding: '2px 8px', borderRadius: '10px' }}>
+              Last 5
+            </span>
+          </div>
+          <Link to="/tickets" style={{ fontSize: '13px', color: '#1976d2', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '4px' }}>
             View all →
           </Link>
         </div>
 
         {recentTickets.length === 0 ? (
-          <div style={{ padding: '40px', textAlign: 'center', color: '#999' }}>
-            <p style={{ fontSize: '15px' }}>No tickets yet.</p>
-            <Link to="/tickets/new" style={{ color: '#1976d2', textDecoration: 'none', fontSize: '14px' }}>
-              Create your first ticket
+          <div style={{ padding: '52px', textAlign: 'center' }}>
+            <div style={{ fontSize: '48px', marginBottom: '12px' }}>📭</div>
+            <p style={{ color: '#94a3b8', fontSize: '15px', fontWeight: '500', marginBottom: '16px' }}>No tickets yet</p>
+            <Link
+              to="/tickets/new"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', backgroundColor: '#1976d2', color: '#fff', padding: '9px 20px', borderRadius: '8px', fontSize: '13px', fontWeight: '600' }}
+            >
+              <AddIcon size={14} /> Create your first ticket
             </Link>
           </div>
         ) : (
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
-                <tr style={{ backgroundColor: '#f5f5f5' }}>
-                  {['ID', 'Employee', 'Category', 'Priority', 'Status', 'Created At'].map((h) => (
-                    <th
-                      key={h}
-                      style={{
-                        padding: '12px 16px',
-                        textAlign: 'left',
-                        fontSize: '12px',
-                        fontWeight: '600',
-                        color: '#666',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.5px',
-                      }}
-                    >
+                <tr style={{ backgroundColor: '#f8fafc' }}>
+                  {['ID', 'Employee', 'Category', 'Priority', 'Status', 'Created'].map((h) => (
+                    <th key={h} style={{ padding: '11px 16px', textAlign: 'left', fontSize: '11px', fontWeight: '700', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.6px', whiteSpace: 'nowrap' }}>
                       {h}
                     </th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {recentTickets.map((ticket, idx) => (
+                {recentTickets.map((ticket) => (
                   <tr
                     key={ticket.ticket_id}
-                    style={{
-                      borderTop: '1px solid #f0f0f0',
-                      cursor: 'pointer',
-                      backgroundColor: idx % 2 === 0 ? '#fff' : '#fafafa',
-                    }}
+                    style={{ borderTop: '1px solid #f1f5f9', cursor: 'pointer', transition: 'background 0.12s' }}
                     onClick={() => navigate(`/tickets/${ticket.ticket_id}`)}
-                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#e3f2fd')}
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.backgroundColor = idx % 2 === 0 ? '#fff' : '#fafafa')
-                    }
+                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#f0f9ff')}
+                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
                   >
-                    <td style={{ padding: '12px 16px', fontSize: '14px', color: '#1976d2', fontWeight: '600' }}>
+                    <td style={{ padding: '13px 16px', fontSize: '13px', color: '#1976d2', fontWeight: '700' }}>
                       #{ticket.ticket_id}
                     </td>
-                    <td style={{ padding: '12px 16px', fontSize: '14px', color: '#333' }}>
+                    <td style={{ padding: '13px 16px', fontSize: '13px', color: '#1e293b', fontWeight: '500' }}>
                       {ticket.employee_name}
                     </td>
-                    <td style={{ padding: '12px 16px', fontSize: '13px', color: '#555' }}>
+                    <td style={{ padding: '13px 16px', fontSize: '13px', color: '#475569' }}>
                       {ticket.issue_category}
                     </td>
-                    <td style={{ padding: '12px 16px' }}>
+                    <td style={{ padding: '13px 16px' }}>
                       <PriorityBadge priority={ticket.priority} />
                     </td>
-                    <td style={{ padding: '12px 16px' }}>
+                    <td style={{ padding: '13px 16px' }}>
                       <StatusBadge status={ticket.status} />
                     </td>
-                    <td style={{ padding: '12px 16px', fontSize: '13px', color: '#888' }}>
+                    <td style={{ padding: '13px 16px', fontSize: '12px', color: '#94a3b8' }}>
                       {formatDate(ticket.created_at)}
                     </td>
                   </tr>
