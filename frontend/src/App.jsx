@@ -17,6 +17,7 @@ import CategoriesPage from './pages/categories/CategoriesPage.jsx'
 import TagsPage from './pages/tags/TagsPage.jsx'
 import UserManagementPage from './pages/users/UserManagementPage.jsx'
 import AnalyticsPage from './pages/analytics/AnalyticsPage.jsx'
+import ETLImportPage from './pages/etl/ETLImportPage.jsx'
 import ProfilePage from './pages/profile/ProfilePage.jsx'
 import BookmarksPage from './pages/bookmarks/BookmarksPage.jsx'
 
@@ -80,6 +81,14 @@ export default function App() {
           element={
             <ProtectedRoute roles={['admin']}>
               <AnalyticsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/etl"
+          element={
+            <ProtectedRoute roles={['admin']}>
+              <ETLImportPage />
             </ProtectedRoute>
           }
         />

@@ -8,8 +8,9 @@ from sqlalchemy.orm import Session
 
 from app.database import engine, Base, SessionLocal
 from app import models  # noqa: F401 — registers all models with SQLAlchemy metadata
-from app.routers import auth, users, articles, categories, tags, search, files, approvals, collaboration, analytics
+from app.routers import auth, users, articles, categories, tags, search, files, approvals, collaboration, analytics, etl
 from app.core.security import hash_password, verify_password
+from app.core.seed import seed_demo_data
 from app.config import settings
 
 # Path to the built React app
@@ -47,6 +48,7 @@ async def lifespan(app: FastAPI):
     db = SessionLocal()
     try:
         _create_default_admin(db)
+        seed_demo_data(db)
     finally:
         db.close()
 
@@ -83,6 +85,7 @@ app.include_router(files.router)
 app.include_router(approvals.router)
 app.include_router(collaboration.router)
 app.include_router(analytics.router)
+app.include_router(etl.router)
 
 # ─── Serve React frontend ───────────────────────────────────────────────────────
 # Serve static assets (JS, CSS, images) from dist/assets

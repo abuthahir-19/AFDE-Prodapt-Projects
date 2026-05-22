@@ -13,6 +13,7 @@ import {
   BarChart3,
   X,
   BookMarked,
+  DatabaseZap,
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext.jsx'
 import { useQuery } from '@tanstack/react-query'
@@ -91,6 +92,12 @@ export default function Sidebar({ isOpen, onClose }) {
       label: 'Analytics',
       to: '/analytics',
       icon: BarChart3,
+      show: hasRole(['admin']),
+    },
+    {
+      label: 'ETL Import',
+      to: '/etl',
+      icon: DatabaseZap,
       show: hasRole(['admin']),
     },
   ]

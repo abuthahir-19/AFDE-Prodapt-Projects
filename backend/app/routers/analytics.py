@@ -1,14 +1,20 @@
+from datetime import datetime, timedelta
 from typing import List, Optional
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
-from sqlalchemy import func, desc
+from sqlalchemy import func, desc, extract
 from app.core.deps import get_db, get_current_active_user
 from app.models.user import User
 from app.models.article import Article
 from app.models.category import Category
 from app.models.rating import Rating
 from app.models.search_log import SearchLog
-from app.schemas.analytics import DashboardMetrics, PopularArticle, UserActivity
+from app.models.comment import Comment
+from app.models.bookmark import Bookmark
+from app.schemas.analytics import (
+    DashboardMetrics, PopularArticle, UserActivity,
+    ArticleTrend, AuthorActivityReport, EngagementStats,
+)
 
 router = APIRouter(prefix="/api/analytics", tags=["Analytics"])
 
@@ -172,3 +178,91 @@ def get_search_trends(
         .all()
     )
     return [{"query": row.query, "search_count": row.search_count} for row in rows]
+
+
+@router.get("/article-trends", response_model=List[ArticleTrend])
+def get_article_trends(
+    months: int = Query(12, ge=1, le=24),
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_active_user),
+):
+    """Return article creation counts grouped by month for the last N months."""
+    since = datetime.utcnow() - timedelta(days=months * 31)
+    rows = (
+        db.query(
+            extract("year", Article.created_at).label("year"),
+            extract("month", Article.created_at).label("month"),
+            func.count(Article.id).label("count"),
+        )
+        .filter(Article.created_at >= since)
+        .group_by("year", "month")
+        .order_by("year", "month")
+        .all()
+    )
+    return [
+        ArticleTrend(month=f"{int(r.year):04d}-{int(r.month):02d}", count=r.count)
+        for r in rows
+    ]
+
+
+@router.get("/author-activity", response_model=List[AuthorActivityReport])
+def get_author_activity(
+    limit: int = Query(20, ge=1, le=100),
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_active_user),
+):
+    """Return per-author stats: article count, total views, average rating."""
+    rows = (
+        db.query(
+            User.id,
+            User.name,
+            User.department,
+            func.count(Article.id).label("article_count"),
+            func.coalesce(func.sum(Article.view_count), 0).label("total_views"),
+        )
+        .join(Article, Article.author_id == User.id)
+        .filter(Article.status == "published")
+        .group_by(User.id, User.name, User.department)
+        .order_by(desc("total_views"))
+        .limit(limit)
+        .all()
+    )
+
+    results = []
+    for row in rows:
+        avg = (
+            db.query(func.avg(Rating.value))
+            .join(Article, Rating.article_id == Article.id)
+            .filter(Article.author_id == row.id)
+            .scalar()
+        )
+        results.append(
+            AuthorActivityReport(
+                user_id=row.id,
+                name=row.name,
+                department=row.department,
+                article_count=row.article_count,
+                total_views=row.total_views,
+                avg_rating=round(float(avg), 2) if avg else None,
+            )
+        )
+    return results
+
+
+@router.get("/engagement-stats", response_model=EngagementStats)
+def get_engagement_stats(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_active_user),
+):
+    """Return aggregate engagement counts: comments, ratings, bookmarks, avg rating."""
+    total_comments = db.query(func.count(Comment.id)).scalar() or 0
+    total_ratings = db.query(func.count(Rating.id)).scalar() or 0
+    total_bookmarks = db.query(func.count(Bookmark.id)).scalar() or 0
+    avg_rating = db.query(func.avg(Rating.value)).scalar()
+
+    return EngagementStats(
+        total_comments=total_comments,
+        total_ratings=total_ratings,
+        total_bookmarks=total_bookmarks,
+        avg_rating=round(float(avg_rating), 2) if avg_rating else None,
+    )

@@ -8,6 +8,7 @@ from app.models.rating import Rating
 from app.models.bookmark import Bookmark
 from app.models.approval import ApprovalHistory
 from app.models.search_log import SearchLog
+from app.models.etl_job import ETLJob
 
 __all__ = [
     "User",
@@ -21,4 +22,5 @@ __all__ = [
     "Bookmark",
     "ApprovalHistory",
     "SearchLog",
+    "ETLJob",
 ]
