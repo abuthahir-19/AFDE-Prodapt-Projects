@@ -1,7 +1,5 @@
 import api from './api.js'
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
-
 const fileService = {
   uploadFile: async (formData) => {
     const response = await api.post('/api/files/upload', formData, {
@@ -22,7 +20,7 @@ const fileService = {
 
   getDownloadUrl: (id) => {
     const token = localStorage.getItem('kb_token')
-    return `${API_BASE_URL}/api/files/${id}?token=${token}`
+    return `/api/files/${id}?token=${token}`
   },
 }
 

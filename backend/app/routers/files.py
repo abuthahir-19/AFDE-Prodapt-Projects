@@ -1,10 +1,12 @@
 import os
 import uuid
 from typing import List, Optional
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, status
+from fastapi import APIRouter, Depends, HTTPException, Request, UploadFile, File, Form, status, Query
 from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
+from jose import JWTError
 from app.core.deps import get_db, get_current_active_user
+from app.core.security import decode_token
 from app.models.user import User
 from app.models.attachment import Attachment
 from app.models.article import Article
@@ -115,11 +117,42 @@ def list_article_attachments(
     return db.query(Attachment).filter(Attachment.article_id == article_id).all()
 
 
+def _resolve_download_user(
+    request: Request,
+    token: Optional[str] = Query(default=None),
+    db: Session = Depends(get_db),
+) -> User:
+    """Authenticate via Authorization header OR ?token= query param (for direct download links)."""
+    raw_token: Optional[str] = None
+
+    auth_header = request.headers.get("Authorization", "")
+    if auth_header.startswith("Bearer "):
+        raw_token = auth_header[7:]
+    elif token:
+        raw_token = token
+
+    if not raw_token:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
+
+    try:
+        payload = decode_token(raw_token)
+        user_id = payload.get("user_id")
+        if not user_id:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+    except JWTError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+
+    user = db.query(User).filter(User.id == user_id, User.is_active == True).first()
+    if not user:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
+    return user
+
+
 @router.get("/{attachment_id}")
 def download_file(
     attachment_id: int,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_active_user),
+    current_user: User = Depends(_resolve_download_user),
 ):
     """Stream/download a file by its attachment ID."""
     attachment = db.query(Attachment).filter(Attachment.id == attachment_id).first()

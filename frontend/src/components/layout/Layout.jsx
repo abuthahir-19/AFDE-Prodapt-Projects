@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import Navbar from './Navbar.jsx'
 import Sidebar from './Sidebar.jsx'
+import ErrorBoundary from '../common/ErrorBoundary.jsx'
 
 export default function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -24,7 +25,9 @@ export default function Layout() {
         <Navbar onMenuClick={() => setSidebarOpen(true)} />
         <main className="flex-1 overflow-y-auto">
           <div className="p-6">
-            <Outlet />
+            <ErrorBoundary>
+              <Outlet />
+            </ErrorBoundary>
           </div>
         </main>
       </div>

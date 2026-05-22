@@ -44,6 +44,7 @@ def list_articles(
     status_filter: Optional[str] = Query(None, alias="status"),
     category_id: Optional[int] = None,
     author_id: Optional[int] = None,
+    sort: Optional[str] = None,
     skip: int = 0,
     limit: int = 20,
     db: Session = Depends(get_db),
@@ -83,7 +84,14 @@ def list_articles(
     if author_id:
         query = query.filter(Article.author_id == author_id)
 
-    articles = query.order_by(Article.created_at.desc()).offset(skip).limit(limit).all()
+    if sort == "popular":
+        query = query.order_by(Article.view_count.desc())
+    elif sort == "title":
+        query = query.order_by(Article.title.asc())
+    else:
+        query = query.order_by(Article.created_at.desc())
+
+    articles = query.offset(skip).limit(limit).all()
 
     results = []
     for article in articles:

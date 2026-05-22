@@ -1,7 +1,5 @@
 from datetime import timedelta
-from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from app.core.deps import get_db
 from app.core.security import hash_password, verify_password, create_access_token
@@ -24,22 +22,13 @@ class ResetPasswordRequest(BaseModel):
 
 @router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 def register(user_data: UserCreate, db: Session = Depends(get_db)):
-    """Register a new user."""
-    # Check if email already exists
     existing = db.query(User).filter(User.email == user_data.email).first()
     if existing:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Email address is already registered",
-        )
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email address is already registered")
 
-    # Validate role
     valid_roles = {"admin", "author", "reviewer", "employee"}
     if user_data.role not in valid_roles:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Invalid role. Must be one of: {', '.join(valid_roles)}",
-        )
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Invalid role. Must be one of: {', '.join(valid_roles)}")
 
     new_user = User(
         name=user_data.name,
@@ -55,41 +44,7 @@ def register(user_data: UserCreate, db: Session = Depends(get_db)):
 
 
 @router.post("/login", response_model=Token)
-def login(
-    form_data: Optional[OAuth2PasswordRequestForm] = Depends(),
-    db: Session = Depends(get_db),
-):
-    """
-    Login endpoint. Accepts OAuth2 form data (username=email, password).
-    """
-    email = form_data.username
-    password = form_data.password
-
-    user = db.query(User).filter(User.email == email).first()
-    if not user or not verify_password(password, user.hashed_password):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect email or password",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    if not user.is_active:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Account is deactivated",
-        )
-
-    access_token = create_access_token(
-        data={"user_id": user.id, "role": user.role},
-        expires_delta=timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES),
-    )
-    return {"access_token": access_token, "token_type": "bearer"}
-
-
-@router.post("/login/json", response_model=Token)
-def login_json(credentials: UserLogin, db: Session = Depends(get_db)):
-    """
-    Login endpoint accepting JSON body with email and password.
-    """
+def login(credentials: UserLogin, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.email == credentials.email).first()
     if not user or not verify_password(credentials.password, user.hashed_password):
         raise HTTPException(
@@ -98,10 +53,7 @@ def login_json(credentials: UserLogin, db: Session = Depends(get_db)):
             headers={"WWW-Authenticate": "Bearer"},
         )
     if not user.is_active:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Account is deactivated",
-        )
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Account is deactivated")
 
     access_token = create_access_token(
         data={"user_id": user.id, "role": user.role},

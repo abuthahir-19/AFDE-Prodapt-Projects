@@ -2,7 +2,7 @@ import api from './api.js'
 
 const articleService = {
   getArticles: async (params = {}) => {
-    const response = await api.get('/api/articles', { params })
+    const response = await api.get('/api/articles/', { params })
     return response.data
   },
 
@@ -17,7 +17,7 @@ const articleService = {
   },
 
   createArticle: async (data) => {
-    const response = await api.post('/api/articles', data)
+    const response = await api.post('/api/articles/', data)
     return response.data
   },
 

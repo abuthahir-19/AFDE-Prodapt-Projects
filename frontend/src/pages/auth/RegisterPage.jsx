@@ -15,7 +15,7 @@ export default function RegisterPage() {
   const navigate = useNavigate()
 
   const [form, setForm] = useState({
-    full_name: '',
+    name: '',
     email: '',
     password: '',
     confirm_password: '',
@@ -29,7 +29,7 @@ export default function RegisterPage() {
 
   const validate = () => {
     const errs = {}
-    if (!form.full_name.trim()) errs.full_name = 'Full name is required'
+    if (!form.name.trim()) errs.name = 'Full name is required'
     if (!form.email) errs.email = 'Email is required'
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errs.email = 'Invalid email address'
     if (!form.password) errs.password = 'Password is required'
@@ -95,13 +95,13 @@ export default function RegisterPage() {
                 <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                 <input
                   type="text"
-                  value={form.full_name}
-                  onChange={update('full_name')}
+                  value={form.name}
+                  onChange={update('name')}
                   placeholder="John Doe"
-                  className={`w-full pl-10 pr-4 py-2.5 border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.full_name ? 'border-red-400' : 'border-gray-200'}`}
+                  className={`w-full pl-10 pr-4 py-2.5 border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.name ? 'border-red-400' : 'border-gray-200'}`}
                 />
               </div>
-              {errors.full_name && <p className="text-red-500 text-xs mt-1">{errors.full_name}</p>}
+              {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
             </div>
 
             {/* Email */}

@@ -74,7 +74,7 @@ cp .env.example .env
 Edit `.env` with your database credentials:
 
 ```env
-DATABASE_URL=postgresql://postgres:your_password@localhost:5432/knowledge_base_db
+DATABASE_URL=postgresql+pg8000://postgres:your_password@localhost:5432/knowledge_base_db
 SECRET_KEY=your-secret-key-minimum-32-characters-long
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=1440
@@ -88,9 +88,9 @@ Start the backend:
 python run.py
 ```
 
-The API will be available at: `http://localhost:8000`  
-Interactive API docs (Swagger): `http://localhost:8000/docs`  
-Alternative docs (ReDoc): `http://localhost:8000/redoc`
+The API will be available at: `http://localhost:8080`  
+Interactive API docs (Swagger): `http://localhost:8080/docs`  
+Alternative docs (ReDoc): `http://localhost:8080/redoc`
 
 > On first startup, all database tables are created automatically and a default admin account is seeded.
 
@@ -102,11 +102,13 @@ cd frontend
 # Install dependencies
 npm install
 
-# Start development server
-npm run dev
+# Build for production (the backend serves this automatically)
+npm run build
 ```
 
-The app will be available at: `http://localhost:5173`
+The full app is then available at: `http://localhost:8080` (served by the backend — no separate frontend server needed).
+
+> **Development mode:** If you want hot-reload during development, run `npm run dev` in `frontend/` while the backend is running on port 8080. Vite proxies all `/api` calls to the backend automatically.
 
 ---
 

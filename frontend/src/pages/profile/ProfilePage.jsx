@@ -11,7 +11,7 @@ export default function ProfilePage() {
   const queryClient = useQueryClient()
 
   const [profileForm, setProfileForm] = useState({
-    full_name: user?.full_name || user?.name || '',
+    name: user?.name || '',
     department: user?.department || '',
   })
   const [passwordForm, setPasswordForm] = useState({
@@ -46,7 +46,7 @@ export default function ProfilePage() {
 
   const handleProfileSubmit = (e) => {
     e.preventDefault()
-    if (!profileForm.full_name.trim()) { toast.error('Name is required'); return }
+    if (!profileForm.name.trim()) { toast.error('Name is required'); return }
     profileMutation.mutate(profileForm)
   }
 
@@ -81,10 +81,10 @@ export default function ProfilePage() {
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
         <div className="flex items-center gap-5 mb-6 pb-6 border-b border-gray-100">
           <div className="w-20 h-20 bg-blue-600 rounded-2xl flex items-center justify-center text-white text-2xl font-bold shadow-lg">
-            {getInitials(user?.full_name || user?.name)}
+            {getInitials(user?.name)}
           </div>
           <div>
-            <h2 className="text-xl font-bold text-gray-900">{user?.full_name || user?.name}</h2>
+            <h2 className="text-xl font-bold text-gray-900">{user?.name}</h2>
             <p className="text-gray-500">{user?.email}</p>
             <div className="flex items-center gap-2 mt-2">
               <Badge variant={user?.role}>{null}</Badge>
@@ -108,8 +108,8 @@ export default function ProfilePage() {
             <label className="block text-sm font-medium text-gray-700 mb-1.5">Full Name</label>
             <input
               type="text"
-              value={profileForm.full_name}
-              onChange={(e) => setProfileForm({ ...profileForm, full_name: e.target.value })}
+              value={profileForm.name}
+              onChange={(e) => setProfileForm({ ...profileForm, name: e.target.value })}
               className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>

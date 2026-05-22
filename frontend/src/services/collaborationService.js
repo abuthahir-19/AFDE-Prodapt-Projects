@@ -49,7 +49,7 @@ const collaborationService = {
   },
 
   getBookmarks: async () => {
-    const response = await api.get('/api/collaboration/bookmarks')
+    const response = await api.get('/api/articles/bookmarked')
     return response.data
   },
 }

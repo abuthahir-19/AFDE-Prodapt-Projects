@@ -52,7 +52,7 @@ export default function DashboardPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">
-            Welcome back, {user?.full_name?.split(' ')[0] || 'there'}!
+            Welcome back, {user?.name?.split(' ')[0] || 'there'}!
           </h1>
           <p className="text-gray-500 text-sm mt-1">Here's what's happening in your knowledge base</p>
         </div>
@@ -154,7 +154,7 @@ export default function DashboardPage() {
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-medium text-gray-900 truncate">{article.title}</p>
                     <p className="text-xs text-gray-400 mt-0.5">
-                      {article.author?.full_name} · {new Date(article.created_at).toLocaleDateString()}
+                      {article.author?.name} · {new Date(article.created_at).toLocaleDateString()}
                     </p>
                   </div>
                   <div className="ml-3 flex-shrink-0">

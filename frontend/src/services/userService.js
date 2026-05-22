@@ -2,7 +2,7 @@ import api from './api.js'
 
 const userService = {
   getUsers: async (params = {}) => {
-    const response = await api.get('/api/users', { params })
+    const response = await api.get('/api/users/', { params })
     return response.data
   },
 

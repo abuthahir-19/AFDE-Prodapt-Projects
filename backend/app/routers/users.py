@@ -3,7 +3,8 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.core.deps import get_db, get_current_active_user, require_roles
 from app.models.user import User
-from app.schemas.user import UserResponse, UserUpdate
+from app.schemas.user import UserResponse, UserUpdate, ChangePassword
+from app.core.security import hash_password, verify_password
 
 router = APIRouter(prefix="/api/users", tags=["Users"])
 
@@ -41,6 +42,28 @@ def update_me(
     db.commit()
     db.refresh(current_user)
     return current_user
+
+
+@router.put("/me/password", status_code=status.HTTP_200_OK)
+def change_my_password(
+    payload: ChangePassword,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_active_user),
+):
+    """Change the current user's password."""
+    if not verify_password(payload.current_password, current_user.hashed_password):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Current password is incorrect",
+        )
+    if len(payload.new_password) < 8:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="New password must be at least 8 characters",
+        )
+    current_user.hashed_password = hash_password(payload.new_password)
+    db.commit()
+    return {"message": "Password changed successfully"}
 
 
 @router.get("/{user_id}", response_model=UserResponse)

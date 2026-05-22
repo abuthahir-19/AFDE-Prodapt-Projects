@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyw
+*.pyz
+.Python
+env/
+venv/
+.venv/
+ENV/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+
+# Node / Frontend
+frontend/node_modules/
+frontend/.cache/
+frontend/dist/.vite/
+
+# Alembic
+# alembic/versions/  ← keep versions tracked
+
+# Uploaded files (keep directory structure but not actual files)
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+pip-log.txt
+
+# Windows
+ehthumbs.db
