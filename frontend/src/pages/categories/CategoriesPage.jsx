@@ -26,7 +26,10 @@ function CategoryForm({ initial, categories, onSubmit, isLoading }) {
     e.preventDefault()
     const errs = validate()
     if (Object.keys(errs).length) { setErrors(errs); return }
-    onSubmit(form)
+    onSubmit({
+      ...form,
+      parent_id: form.parent_id === '' ? null : Number(form.parent_id),
+    })
   }
 
   return (
@@ -95,7 +98,10 @@ export default function CategoriesPage() {
       toast.success('Category created')
       setModal(null)
     },
-    onError: (err) => toast.error(err?.response?.data?.detail || 'Failed to create'),
+    onError: (err) => {
+      const detail = err?.response?.data?.detail
+      toast.error(Array.isArray(detail) ? detail[0]?.msg : detail || 'Failed to create')
+    },
   })
 
   const updateMutation = useMutation({
@@ -105,7 +111,10 @@ export default function CategoriesPage() {
       toast.success('Category updated')
       setModal(null)
     },
-    onError: (err) => toast.error(err?.response?.data?.detail || 'Failed to update'),
+    onError: (err) => {
+      const detail = err?.response?.data?.detail
+      toast.error(Array.isArray(detail) ? detail[0]?.msg : detail || 'Failed to update')
+    },
   })
 
   const deleteMutation = useMutation({
