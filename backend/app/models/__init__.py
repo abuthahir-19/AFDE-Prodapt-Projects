@@ -5,3 +5,4 @@ from app.models.complaint import Complaint
 from app.models.complaint_history import ComplaintHistory
 from app.models.attachment import Attachment
 from app.models.feedback import Feedback
+from app.models.analytics import AnalyticsComplaint, ETLRunLog
