@@ -5,6 +5,8 @@ import Dashboard from './pages/Dashboard';
 import SubmitFeedback from './pages/SubmitFeedback';
 import FeedbackList from './pages/FeedbackList';
 import FeedbackDetail from './pages/FeedbackDetail';
+import Analytics from './pages/Analytics';
+import ETLImport from './pages/ETLImport';
 import './App.css';
 
 function App() {
@@ -18,6 +20,8 @@ function App() {
             <Route path="/submit" element={<SubmitFeedback />} />
             <Route path="/feedback" element={<FeedbackList />} />
             <Route path="/feedback/:id" element={<FeedbackDetail />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/import" element={<ETLImport />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>

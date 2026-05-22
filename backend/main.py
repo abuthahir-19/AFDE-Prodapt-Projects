@@ -4,13 +4,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from database import engine
 import models
 from routers import feedback
+from routers import etl
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Feedback Management System",
-    description="REST API for managing participant feedback",
-    version="1.0.0",
+    description="REST API for managing participant feedback with ETL pipeline",
+    version="2.0.0",
 )
 
 app.add_middleware(
@@ -22,8 +23,9 @@ app.add_middleware(
 )
 
 app.include_router(feedback.router, prefix="/api", tags=["Feedback"])
+app.include_router(etl.router, prefix="/api", tags=["ETL"])
 
 
 @app.get("/", tags=["Health"])
 def root():
-    return {"message": "Feedback Management System API is running", "version": "1.0.0"}
+    return {"message": "Feedback Management System API is running", "version": "2.0.0"}

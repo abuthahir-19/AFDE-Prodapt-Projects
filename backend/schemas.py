@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 
 
 class FeedbackCreate(BaseModel):
@@ -26,3 +26,57 @@ class FeedbackResponse(BaseModel):
     submitted_at: datetime
 
     model_config = {"from_attributes": True}
+
+
+# ETL Schemas
+
+class ETLJobResponse(BaseModel):
+    job_id: int
+    filename: str
+    status: str
+    total_records: int
+    valid_records: int
+    invalid_records: int
+    duplicate_records: int
+    imported_records: int
+    error_message: Optional[str]
+    created_at: datetime
+    completed_at: Optional[datetime]
+
+    model_config = {"from_attributes": True}
+
+
+class ETLResult(BaseModel):
+    job_id: int
+    filename: str
+    status: str
+    total_records: int
+    valid_records: int
+    invalid_records: int
+    duplicate_records: int
+    imported_records: int
+
+
+# Analytics Schemas
+
+class RatingDistribution(BaseModel):
+    rating: int
+    count: int
+
+
+class ProgramStats(BaseModel):
+    program_name: str
+    total_count: int
+    average_rating: float
+    rating_distribution: List[RatingDistribution]
+
+
+class AnalyticsSummary(BaseModel):
+    total_feedback: int
+    average_rating: float
+    total_programs: int
+    rating_distribution: List[RatingDistribution]
+    top_rated_program: Optional[str]
+    top_rated_program_avg: Optional[float]
+    most_feedback_program: Optional[str]
+    most_feedback_count: Optional[int]
