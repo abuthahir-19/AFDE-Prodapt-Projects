@@ -108,7 +108,7 @@ function Analytics() {
           onClick={handleDownload}
           disabled={downloading || !summary?.total_feedback}
         >
-          {downloading ? 'Downloading…' : '&#11015; Download Report'}
+          {downloading ? 'Downloading…' : '⬇ Download Report'}
         </button>
       </div>
 
