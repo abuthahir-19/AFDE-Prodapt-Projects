@@ -6,6 +6,7 @@ export default function Dashboard() {
   const [stats, setStats] = useState({ total: 0, available: 0, borrowed: 0, borrowers: 0 });
   const [recent, setRecent] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     Promise.all([getBooks(), getTransactions(), getBorrowers()])
@@ -20,11 +21,12 @@ export default function Dashboard() {
         });
         setRecent([...transactions].reverse().slice(0, 5));
       })
-      .catch(console.error)
+      .catch(() => setError("Could not connect to the backend. Please ensure the server is running on http://localhost:8000."))
       .finally(() => setLoading(false));
   }, []);
 
   if (loading) return <div className="page-loading">Loading dashboard…</div>;
+  if (error) return <div className="page-loading" style={{ color: "#c62828" }}>{error}</div>;
 
   return (
     <div className="page dashboard">

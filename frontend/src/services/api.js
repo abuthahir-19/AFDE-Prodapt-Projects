@@ -26,4 +26,11 @@ export const getTransactions = () => api.get("/transactions");
 // ── Search ─────────────────────────────────────────────────────
 export const searchBooks = (query) => api.get("/search", { params: { q: query } });
 
+// ── Analytics ──────────────────────────────────────────────────
+export const getMostBorrowedBooks = (limit = 10) =>
+  api.get("/analytics/most-borrowed-books", { params: { limit } });
+export const getCategoryStats = () => api.get("/analytics/category-stats");
+export const getMonthlyTrends = () => api.get("/analytics/monthly-trends");
+export const getOverdueTransactions = () => api.get("/analytics/overdue-transactions");
+
 export default api;

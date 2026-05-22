@@ -10,6 +10,7 @@ export default function BorrowReturn() {
   const [returnForm, setReturnForm] = useState({ transaction_id: "" });
   const [message, setMessage] = useState({ text: "", type: "" });
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState("");
 
   const fetchAll = () =>
     Promise.all([getBooks(), getBorrowers(), getTransactions()])
@@ -17,8 +18,9 @@ export default function BorrowReturn() {
         setBooks(bRes.data);
         setBorrowers(brRes.data);
         setTransactions([...txRes.data].reverse());
+        setFetchError("");
       })
-      .catch(console.error)
+      .catch(() => setFetchError("Could not connect to the backend. Please ensure the server is running on http://localhost:8000."))
       .finally(() => setLoading(false));
 
   useEffect(() => { fetchAll(); }, []);
@@ -71,6 +73,8 @@ export default function BorrowReturn() {
         <div className={`alert ${message.type === "error" ? "alert-error" : ""}`}>{message.text}</div>
       )}
 
+      {fetchError && <div className="alert alert-error">{fetchError}</div>}
+
       <div className="two-col">
         <div className="card form-card">
           <h2>Borrow a Book</h2>
@@ -122,7 +126,7 @@ export default function BorrowReturn() {
 
       <div className="card">
         <h2>All Transactions</h2>
-        {loading ? <p>Loading…</p> : transactions.length === 0 ? <p className="empty">No transactions yet.</p> : (
+        {loading ? <p>Loading…</p> : fetchError ? null : transactions.length === 0 ? <p className="empty">No transactions yet.</p> : (
           <div className="table-wrapper">
             <table className="data-table">
               <thead>

@@ -70,6 +70,7 @@ class TransactionResponse(BaseModel):
     book_id: int
     borrower_id: int
     borrow_date: datetime
+    due_date: Optional[datetime] = None
     return_date: Optional[datetime] = None
     book: Optional[BookResponse] = None
     borrower: Optional[BorrowerResponse] = None

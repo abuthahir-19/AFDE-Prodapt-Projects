@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from database import Base
 
@@ -31,9 +31,10 @@ class Transaction(Base):
     __tablename__ = "transactions"
 
     transaction_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    book_id = Column(Integer, nullable=False)
-    borrower_id = Column(Integer, nullable=False)
+    book_id = Column(Integer, ForeignKey("books.book_id"), nullable=False)
+    borrower_id = Column(Integer, ForeignKey("borrowers.borrower_id"), nullable=False)
     borrow_date = Column(DateTime, nullable=False)
+    due_date = Column(DateTime, nullable=True)
     return_date = Column(DateTime, nullable=True)
 
     book = relationship("Book", back_populates="transactions")

@@ -1,0 +1,8 @@
+# Backend (first time or after reset)
+cd backend && pip install -r requirements.txt
+python etl.py          # seeds 50 books, 30 borrowers, 203 transactions
+uvicorn main:app --reload --port 8000
+
+# Frontend
+cd frontend && npm install && npm run dev
+# Then navigate to http://localhost:5173/analytics

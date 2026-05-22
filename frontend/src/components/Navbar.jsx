@@ -14,6 +14,7 @@ export default function Navbar() {
         <li><NavLink to="/borrowers">Borrowers</NavLink></li>
         <li><NavLink to="/borrow-return">Borrow / Return</NavLink></li>
         <li><NavLink to="/search">Search</NavLink></li>
+        <li><NavLink to="/analytics">Analytics</NavLink></li>
       </ul>
     </nav>
   );

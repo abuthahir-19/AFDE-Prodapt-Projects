@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import models
 from database import engine
-from routers import books, borrowers, transactions, search
+from routers import books, borrowers, transactions, search, analytics
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -24,6 +24,7 @@ app.include_router(books.router)
 app.include_router(borrowers.router)
 app.include_router(transactions.router)
 app.include_router(search.router)
+app.include_router(analytics.router)
 
 
 @app.get("/", tags=["Root"])

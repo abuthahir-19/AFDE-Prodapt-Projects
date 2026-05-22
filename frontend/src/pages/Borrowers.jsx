@@ -11,11 +11,12 @@ export default function Borrowers() {
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState("");
 
   const fetchBorrowers = () =>
     getBorrowers()
-      .then((r) => setBorrowers(r.data))
-      .catch(console.error)
+      .then((r) => { setBorrowers(r.data); setFetchError(""); })
+      .catch(() => setFetchError("Could not connect to the backend. Please ensure the server is running on http://localhost:8000."))
       .finally(() => setLoading(false));
 
   useEffect(() => { fetchBorrowers(); }, []);
@@ -108,7 +109,7 @@ export default function Borrowers() {
 
       <div className="card">
         <h2>All Borrowers</h2>
-        {loading ? <p>Loading…</p> : borrowers.length === 0 ? <p className="empty">No borrowers found.</p> : (
+        {loading ? <p>Loading…</p> : fetchError ? <p className="error">{fetchError}</p> : borrowers.length === 0 ? <p className="empty">No borrowers found.</p> : (
           <div className="table-wrapper">
             <table className="data-table">
               <thead>

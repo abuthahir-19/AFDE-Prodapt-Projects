@@ -11,11 +11,12 @@ export default function Books() {
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState("");
 
   const fetchBooks = () =>
     getBooks()
-      .then((r) => setBooks(r.data))
-      .catch(console.error)
+      .then((r) => { setBooks(r.data); setFetchError(""); })
+      .catch(() => setFetchError("Could not connect to the backend. Please ensure the server is running on http://localhost:8000."))
       .finally(() => setLoading(false));
 
   useEffect(() => { fetchBooks(); }, []);
@@ -120,7 +121,7 @@ export default function Books() {
 
       <div className="card">
         <h2>All Books</h2>
-        {loading ? <p>Loading…</p> : books.length === 0 ? <p className="empty">No books found.</p> : (
+        {loading ? <p>Loading…</p> : fetchError ? <p className="error">{fetchError}</p> : books.length === 0 ? <p className="empty">No books found.</p> : (
           <div className="table-wrapper">
             <table className="data-table">
               <thead>

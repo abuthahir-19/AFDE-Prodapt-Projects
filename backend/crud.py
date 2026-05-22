@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import or_
-from datetime import datetime
+from datetime import datetime, timedelta
 import models
 import schemas
 
@@ -85,10 +85,12 @@ def borrow_book(db: Session, borrow_req: schemas.BorrowRequest):
     if not book or book.availability_status != "available":
         return None
 
+    now = datetime.utcnow()
     transaction = models.Transaction(
         book_id=borrow_req.book_id,
         borrower_id=borrow_req.borrower_id,
-        borrow_date=datetime.utcnow(),
+        borrow_date=now,
+        due_date=now + timedelta(days=14),
     )
     book.availability_status = "borrowed"
     db.add(transaction)
