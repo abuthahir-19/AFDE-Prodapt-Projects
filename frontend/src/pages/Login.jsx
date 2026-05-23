@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import api from '../services/api'
+import { Target, Mail, Lock, LogIn } from 'lucide-react'
 
 export default function Login() {
   const [form, setForm] = useState({ email: '', password: '' })
@@ -29,7 +30,9 @@ export default function Login() {
     <div className="auth-page">
       <div className="auth-card">
         <div className="auth-brand">
-          <div className="brand-logo">🎯</div>
+          <div className="brand-logo-wrap">
+            <Target size={30} color="#fff" />
+          </div>
           <h1>CCRS</h1>
           <p>Customer Complaint &amp; Resolution Tracking System</p>
         </div>
@@ -62,7 +65,7 @@ export default function Login() {
             />
           </div>
           <button type="submit" className="btn btn-primary btn-full" disabled={loading}>
-            {loading ? 'Signing in...' : 'Sign In'}
+            {loading ? <><div className="spinner" style={{width:16,height:16,borderWidth:2}} /> Signing in...</> : <><LogIn size={15} /> Sign In</>}
           </button>
         </form>
 
