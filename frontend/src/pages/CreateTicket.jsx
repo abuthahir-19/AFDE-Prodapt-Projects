@@ -31,6 +31,17 @@ const inputBase = {
   backgroundColor: '#fff',
 };
 
+const Field = ({ error, children }) => (
+  <div style={{ marginBottom: '20px' }}>
+    {children}
+    {error && (
+      <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '5px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+        ⚠ {error}
+      </p>
+    )}
+  </div>
+);
+
 const CreateTicket = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({ employee_name: '', department: '', issue_category: '', description: '', priority: '' });
@@ -72,12 +83,6 @@ const CreateTicket = () => {
     }
   };
 
-  const Field = ({ name, error, children }) => (
-    <div style={{ marginBottom: '20px' }}>
-      {children}
-      {error && <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '5px', display: 'flex', alignItems: 'center', gap: '4px' }}>⚠ {error}</p>}
-    </div>
-  );
 
   const focusStyle = (name) => ({
     ...inputBase,

@@ -26,6 +26,17 @@ const inputBase = {
   fontFamily: 'inherit', backgroundColor: '#fff',
 };
 
+const Field = ({ error, children }) => (
+  <div style={{ marginBottom: '20px' }}>
+    {children}
+    {error && (
+      <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '5px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+        ⚠ {error}
+      </p>
+    )}
+  </div>
+);
+
 const EditTicket = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -97,13 +108,6 @@ const EditTicket = () => {
     onFocus: (e) => { e.target.style.borderColor = '#1976d2'; e.target.style.boxShadow = '0 0 0 3px rgba(25,118,210,0.12)'; },
     onBlur:  (e) => { e.target.style.borderColor = errors[name] ? '#ef4444' : '#e2e8f0'; e.target.style.boxShadow = 'none'; },
   });
-
-  const Field = ({ name, error, children }) => (
-    <div style={{ marginBottom: '20px' }}>
-      {children}
-      {error && <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '5px' }}>⚠ {error}</p>}
-    </div>
-  );
 
   const fStyle = (name) => ({ ...inputBase, borderColor: errors[name] ? '#ef4444' : '#e2e8f0' });
 
