@@ -9,6 +9,7 @@ import {
   ResponsiveContainer,
   Cell,
 } from 'recharts';
+import { Download, MessageSquare, Star, BookOpen, Trophy, BarChart2 } from 'lucide-react';
 import { analyticsService } from '../services/feedbackService';
 import './Analytics.css';
 
@@ -108,30 +109,30 @@ function Analytics() {
           onClick={handleDownload}
           disabled={downloading || !summary?.total_feedback}
         >
-          {downloading ? 'Downloading…' : '⬇ Download Report'}
+          <Download size={16} /> {downloading ? 'Downloading…' : 'Download Report'}
         </button>
       </div>
 
       {/* Summary Cards */}
       <div className="summary-grid">
         <div className="summary-card">
-          <div className="summary-icon">&#128172;</div>
+          <div className="summary-icon summary-icon--blue"><MessageSquare size={22} /></div>
           <div className="summary-value">{summary?.total_feedback ?? 0}</div>
           <div className="summary-label">Total Feedback</div>
         </div>
         <div className="summary-card summary-card--indigo">
-          <div className="summary-icon">&#11088;</div>
+          <div className="summary-icon summary-icon--indigo"><Star size={22} /></div>
           <div className="summary-value">{summary?.average_rating ?? 0}</div>
           <div className="summary-label">Average Rating</div>
           {summary?.average_rating > 0 && <StarDisplay value={summary.average_rating} />}
         </div>
         <div className="summary-card summary-card--green">
-          <div className="summary-icon">&#127979;</div>
+          <div className="summary-icon summary-icon--green"><BookOpen size={22} /></div>
           <div className="summary-value">{summary?.total_programs ?? 0}</div>
           <div className="summary-label">Programs Reviewed</div>
         </div>
         <div className="summary-card summary-card--amber">
-          <div className="summary-icon">&#127942;</div>
+          <div className="summary-icon summary-icon--amber"><Trophy size={22} /></div>
           <div className="summary-value summary-value--sm">
             {summary?.top_rated_program ?? '—'}
           </div>
@@ -144,7 +145,7 @@ function Analytics() {
 
       {/* Rating Distribution Chart */}
       <div className="analytics-card">
-        <h2>Rating Distribution</h2>
+        <h2><BarChart2 size={17} className="card-title-icon" /> Rating Distribution</h2>
         {summary?.total_feedback === 0 ? (
           <p className="no-data">No feedback data available yet.</p>
         ) : (
@@ -178,7 +179,7 @@ function Analytics() {
 
       {/* Program Performance Table */}
       <div className="analytics-card">
-        <h2>Program Performance</h2>
+        <h2><BookOpen size={17} className="card-title-icon" /> Program Performance</h2>
         {programs.length === 0 ? (
           <p className="no-data">No program data available yet.</p>
         ) : (

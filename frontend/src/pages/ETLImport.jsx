@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Upload, Download, History, FileText, CheckCircle2 } from 'lucide-react';
 import { etlService } from '../services/feedbackService';
 import './ETLImport.css';
 
@@ -87,7 +88,7 @@ function ETLImport() {
   return (
     <div className="etl-page">
       <div className="etl-header">
-        <h1>ETL Data Import</h1>
+        <h1><Upload size={22} className="etl-header-icon" /> ETL Data Import</h1>
         <p>Upload a CSV or Excel file to import feedback records in bulk.</p>
       </div>
 
@@ -109,7 +110,9 @@ function ETLImport() {
             style={{ display: 'none' }}
             onChange={(e) => handleFileSelect(e.target.files[0])}
           />
-          <div className="drop-zone-icon">&#128196;</div>
+          <div className="drop-zone-icon">
+            {selectedFile ? <FileText size={40} /> : <Upload size={40} />}
+          </div>
           {selectedFile ? (
             <>
               <p className="drop-zone-filename">{selectedFile.name}</p>
@@ -136,7 +139,7 @@ function ETLImport() {
             onClick={handleUpload}
             disabled={!selectedFile || uploading}
           >
-            {uploading ? 'Processing…' : 'Upload & Run ETL'}
+            {uploading ? 'Processing…' : <><Upload size={15} /> Upload &amp; Run ETL</>}
           </button>
           {selectedFile && (
             <button
@@ -152,7 +155,7 @@ function ETLImport() {
       {/* Result Card */}
       {result && (
         <div className="etl-card etl-result-card">
-          <h2>&#9989; Import Complete</h2>
+          <h2><CheckCircle2 size={18} className="result-icon" /> Import Complete</h2>
           <div className="result-grid">
             <div className="result-stat">
               <span className="stat-value">{result.total_records}</span>
@@ -185,7 +188,7 @@ function ETLImport() {
         <p>Download the template to see the expected column format.</p>
         <a
           href="/sample_feedback_template.csv"
-          className="btn-outline"
+          className="btn-outline btn-outline-icon"
           download
           onClick={(e) => {
             e.preventDefault();
@@ -199,13 +202,13 @@ function ETLImport() {
             URL.revokeObjectURL(url);
           }}
         >
-          Download Template
+          <Download size={15} /> Download Template
         </a>
       </div>
 
       {/* Job History */}
       <div className="etl-card">
-        <h2>Import Job History</h2>
+        <h2><History size={17} className="card-title-icon" /> Import Job History</h2>
         {loadingJobs ? (
           <p className="etl-loading">Loading job history…</p>
         ) : jobs.length === 0 ? (

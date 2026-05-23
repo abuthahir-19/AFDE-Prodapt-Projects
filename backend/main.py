@@ -1,10 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from database import engine
+from database import engine, SessionLocal
 import models
 from routers import feedback
 from routers import etl
+from seed import seed_database
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -24,6 +25,15 @@ app.add_middleware(
 
 app.include_router(feedback.router, prefix="/api", tags=["Feedback"])
 app.include_router(etl.router, prefix="/api", tags=["ETL"])
+
+
+@app.on_event("startup")
+def on_startup():
+    db = SessionLocal()
+    try:
+        seed_database(db)
+    finally:
+        db.close()
 
 
 @app.get("/", tags=["Health"])

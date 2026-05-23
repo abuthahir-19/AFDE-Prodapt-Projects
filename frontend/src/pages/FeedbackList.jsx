@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Search, Filter, Plus, X, SlidersHorizontal } from 'lucide-react';
 import { feedbackService } from '../services/feedbackService';
 import FeedbackCard from '../components/FeedbackCard';
 import './FeedbackList.css';
@@ -53,40 +54,49 @@ function FeedbackList() {
       <div className="list-header">
         <h1 className="page-title">All Feedback</h1>
         <button className="btn-primary" onClick={() => navigate('/submit')}>
-          + Submit Feedback
+          <Plus size={16} /> Submit Feedback
         </button>
       </div>
 
       <div className="filter-bar">
-        <input
-          type="text"
-          placeholder="Search by keyword..."
-          value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
-          className="filter-input"
-        />
-        <input
-          type="text"
-          placeholder="Filter by program / event..."
-          value={programFilter}
-          onChange={(e) => setProgramFilter(e.target.value)}
-          className="filter-input"
-        />
-        <select
-          value={ratingFilter}
-          onChange={(e) => setRatingFilter(e.target.value)}
-          className="filter-select"
-        >
-          <option value="">All Ratings</option>
-          <option value="5">★★★★★ Excellent</option>
-          <option value="4">★★★★☆ Very Good</option>
-          <option value="3">★★★☆☆ Good</option>
-          <option value="2">★★☆☆☆ Fair</option>
-          <option value="1">★☆☆☆☆ Poor</option>
-        </select>
+        <div className="filter-input-wrap">
+          <Search size={15} className="filter-icon" />
+          <input
+            type="text"
+            placeholder="Search by keyword..."
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+            className="filter-input"
+          />
+        </div>
+        <div className="filter-input-wrap">
+          <Filter size={15} className="filter-icon" />
+          <input
+            type="text"
+            placeholder="Filter by program / event..."
+            value={programFilter}
+            onChange={(e) => setProgramFilter(e.target.value)}
+            className="filter-input"
+          />
+        </div>
+        <div className="filter-select-wrap">
+          <SlidersHorizontal size={15} className="filter-icon" />
+          <select
+            value={ratingFilter}
+            onChange={(e) => setRatingFilter(e.target.value)}
+            className="filter-select"
+          >
+            <option value="">All Ratings</option>
+            <option value="5">★★★★★ Excellent</option>
+            <option value="4">★★★★☆ Very Good</option>
+            <option value="3">★★★☆☆ Good</option>
+            <option value="2">★★☆☆☆ Fair</option>
+            <option value="1">★☆☆☆☆ Poor</option>
+          </select>
+        </div>
         {hasActiveFilters && (
           <button className="btn-clear" onClick={clearFilters}>
-            Clear Filters
+            <X size={14} /> Clear Filters
           </button>
         )}
       </div>
@@ -105,7 +115,7 @@ function FeedbackList() {
               <p>No feedback found.</p>
               {hasActiveFilters && (
                 <button className="btn-secondary" onClick={clearFilters}>
-                  Clear Filters
+                  <X size={14} /> Clear Filters
                 </button>
               )}
             </div>

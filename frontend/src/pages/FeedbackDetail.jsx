@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { ArrowLeft, Pencil, Trash2, Save, X, Calendar, Hash, MessageSquare } from 'lucide-react';
 import { feedbackService } from '../services/feedbackService';
 import './FeedbackDetail.css';
 
@@ -96,7 +97,7 @@ function FeedbackDetail() {
   return (
     <div className="detail-page">
       <button className="back-btn" onClick={() => navigate('/feedback')}>
-        ← Back to List
+        <ArrowLeft size={16} /> Back to List
       </button>
 
       <div className="detail-card">
@@ -118,23 +119,23 @@ function FeedbackDetail() {
             <StarRating rating={feedback.rating} />
 
             <div className="detail-meta">
-              <span>Submitted: {new Date(feedback.submitted_at).toLocaleString()}</span>
-              <span>ID: #{feedback.feedback_id}</span>
+              <span><Calendar size={13} className="meta-icon" /> {new Date(feedback.submitted_at).toLocaleString()}</span>
+              <span><Hash size={13} className="meta-icon" /> {feedback.feedback_id}</span>
             </div>
 
             {feedback.comments && (
               <div className="detail-comments">
-                <h3>Comments</h3>
+                <h3><MessageSquare size={13} className="meta-icon" /> Comments</h3>
                 <p>{feedback.comments}</p>
               </div>
             )}
 
             <div className="detail-actions">
               <button className="btn-edit" onClick={() => setEditing(true)}>
-                Edit
+                <Pencil size={14} /> Edit
               </button>
               <button className="btn-delete" onClick={() => setShowConfirm(true)}>
-                Delete
+                <Trash2 size={14} /> Delete
               </button>
             </div>
           </>
@@ -197,10 +198,10 @@ function FeedbackDetail() {
 
             <div className="detail-actions">
               <button className="btn-secondary" onClick={() => setEditing(false)} disabled={saving}>
-                Cancel
+                <X size={14} /> Cancel
               </button>
               <button className="btn-primary" onClick={handleSave} disabled={saving}>
-                {saving ? 'Saving...' : 'Save Changes'}
+                {saving ? 'Saving...' : <><Save size={14} /> Save Changes</>}
               </button>
             </div>
           </div>
@@ -210,14 +211,14 @@ function FeedbackDetail() {
       {showConfirm && (
         <div className="modal-overlay">
           <div className="modal">
-            <h3>Delete Feedback</h3>
+            <h3><Trash2 size={18} className="modal-icon-danger" /> Delete Feedback</h3>
             <p>Are you sure you want to delete this feedback? This action cannot be undone.</p>
             <div className="modal-actions">
               <button className="btn-secondary" onClick={() => setShowConfirm(false)} disabled={deleting}>
-                Cancel
+                <X size={14} /> Cancel
               </button>
               <button className="btn-delete" onClick={handleDelete} disabled={deleting}>
-                {deleting ? 'Deleting...' : 'Delete'}
+                {deleting ? 'Deleting...' : <><Trash2 size={14} /> Delete</>}
               </button>
             </div>
           </div>

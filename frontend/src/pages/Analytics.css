@@ -40,6 +40,9 @@
 }
 
 .download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   background: #6366f1;
   color: #fff;
   border: none;
@@ -89,9 +92,19 @@
 .summary-card--amber  { border-top: 3px solid #f59e0b; }
 
 .summary-icon {
-  font-size: 1.75rem;
-  margin-bottom: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  margin: 0 auto 0.6rem;
 }
+
+.summary-icon--blue   { background: #eff6ff; color: #2563eb; }
+.summary-icon--indigo { background: #eef2ff; color: #6366f1; }
+.summary-icon--green  { background: #f0fdf4; color: #16a34a; }
+.summary-icon--amber  { background: #fffbeb; color: #d97706; }
 
 .summary-value {
   font-size: 2rem;
@@ -139,10 +152,17 @@
 }
 
 .analytics-card h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
   font-size: 1.1rem;
   font-weight: 600;
   color: #1e293b;
   margin-bottom: 1.25rem;
+}
+
+.card-title-icon {
+  color: #64748b;
 }
 
 .no-data {

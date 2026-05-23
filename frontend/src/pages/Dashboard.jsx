@@ -1,13 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { MessageSquare, Star, Award, AlertCircle, Clock, ArrowRight, Plus } from 'lucide-react';
 import { feedbackService } from '../services/feedbackService';
 import FeedbackCard from '../components/FeedbackCard';
 import './Dashboard.css';
 
-function StatCard({ label, value, color }) {
+const STAT_ICONS = {
+  total: MessageSquare,
+  avg: Star,
+  excellent: Award,
+  attention: AlertCircle,
+};
+
+function StatCard({ label, value, color, iconKey }) {
+  const Icon = STAT_ICONS[iconKey];
   return (
     <div className="stat-card" style={{ borderTop: `4px solid ${color}` }}>
-      <div className="stat-value" style={{ color }}>{value}</div>
+      <div className="stat-card-top">
+        <div className="stat-icon-wrap" style={{ background: `${color}18`, color }}>
+          <Icon size={20} />
+        </div>
+        <div className="stat-value" style={{ color }}>{value}</div>
+      </div>
       <div className="stat-label">{label}</div>
     </div>
   );
@@ -41,25 +55,27 @@ function Dashboard() {
       <h1 className="page-title">Dashboard</h1>
 
       <div className="stats-grid">
-        <StatCard label="Total Feedback" value={totalCount} color="#2563eb" />
-        <StatCard label="Average Rating" value={avgRating} color="#10b981" />
+        <StatCard label="Total Feedback" value={totalCount} color="#2563eb" iconKey="total" />
+        <StatCard label="Average Rating" value={avgRating} color="#10b981" iconKey="avg" />
         <StatCard
           label="Excellent (5★)"
           value={feedbackList.filter((f) => f.rating === 5).length}
           color="#f59e0b"
+          iconKey="excellent"
         />
         <StatCard
           label="Needs Attention (≤2★)"
           value={feedbackList.filter((f) => f.rating <= 2).length}
           color="#ef4444"
+          iconKey="attention"
         />
       </div>
 
       <div className="dashboard-section">
         <div className="section-header">
-          <h2>Recent Feedback</h2>
+          <h2><Clock size={16} className="section-icon" /> Recent Feedback</h2>
           <button className="btn-link" onClick={() => navigate('/feedback')}>
-            View All →
+            View All <ArrowRight size={14} />
           </button>
         </div>
 
@@ -67,7 +83,7 @@ function Dashboard() {
           <div className="empty-state">
             <p>No feedback yet.</p>
             <button className="btn-primary" onClick={() => navigate('/submit')}>
-              Submit First Feedback
+              <Plus size={16} /> Submit First Feedback
             </button>
           </div>
         ) : (

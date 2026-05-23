@@ -31,10 +31,26 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
-.filter-input {
+.filter-input-wrap,
+.filter-select-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
   flex: 1;
   min-width: 180px;
-  padding: 0.55rem 0.85rem;
+}
+
+.filter-icon {
+  position: absolute;
+  left: 0.7rem;
+  color: #94a3b8;
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.filter-input {
+  width: 100%;
+  padding: 0.55rem 0.85rem 0.55rem 2.1rem;
   border: 1.5px solid #d1d5db;
   border-radius: 8px;
   font-size: 0.9rem;
@@ -46,14 +62,21 @@
   border-color: #2563eb;
 }
 
+.filter-select-wrap {
+  flex: 0 0 auto;
+  min-width: 160px;
+}
+
 .filter-select {
-  padding: 0.55rem 0.85rem;
+  width: 100%;
+  padding: 0.55rem 0.85rem 0.55rem 2.1rem;
   border: 1.5px solid #d1d5db;
   border-radius: 8px;
   font-size: 0.9rem;
   background: #fff;
   cursor: pointer;
   transition: border-color 0.2s;
+  appearance: auto;
 }
 
 .filter-select:focus {
@@ -62,6 +85,9 @@
 }
 
 .btn-clear {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
   background: none;
   border: 1.5px solid #d1d5db;
   color: #64748b;
@@ -69,6 +95,7 @@
   border-radius: 8px;
   font-size: 0.88rem;
   transition: background 0.2s;
+  white-space: nowrap;
 }
 
 .btn-clear:hover {
@@ -108,6 +135,9 @@
 }
 
 .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   background: #2563eb;
   color: #fff;
   border: none;
@@ -116,6 +146,7 @@
   font-size: 0.95rem;
   font-weight: 500;
   transition: background 0.2s;
+  white-space: nowrap;
 }
 
 .btn-primary:hover {
@@ -123,6 +154,9 @@
 }
 
 .btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   background: #f1f5f9;
   color: #374151;
   border: 1.5px solid #d1d5db;

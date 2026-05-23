@@ -19,8 +19,9 @@
   flex-shrink: 0;
 }
 
-.navbar-logo {
-  font-size: 1.4rem;
+.navbar-logo-icon {
+  color: #fff;
+  flex-shrink: 0;
 }
 
 .navbar-title {
@@ -47,6 +48,9 @@
 }
 
 .nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   color: rgba(255, 255, 255, 0.85);
   padding: 0.4rem 0.85rem;
   border-radius: 6px;

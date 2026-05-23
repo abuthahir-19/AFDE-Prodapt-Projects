@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { User, BookOpen, Send, X, MessageSquare } from 'lucide-react';
 import { feedbackService } from '../services/feedbackService';
 import './SubmitFeedback.css';
 
@@ -56,15 +57,24 @@ function SubmitFeedback() {
   return (
     <div className="submit-page">
       <div className="form-card">
-        <h1 className="form-title">Submit Feedback</h1>
-        <p className="form-subtitle">Share your experience to help us improve.</p>
+        <div className="form-card-header">
+          <div className="form-header-icon">
+            <MessageSquare size={22} />
+          </div>
+          <div>
+            <h1 className="form-title">Submit Feedback</h1>
+            <p className="form-subtitle">Share your experience to help us improve.</p>
+          </div>
+        </div>
 
         {success && <div className="alert success">{success}</div>}
         {errors.submit && <div className="alert error">{errors.submit}</div>}
 
         <form onSubmit={handleSubmit} noValidate>
           <div className="form-group">
-            <label htmlFor="participant_name">Participant Name <span className="required">*</span></label>
+            <label htmlFor="participant_name">
+              <User size={14} className="label-icon" /> Participant Name <span className="required">*</span>
+            </label>
             <input
               id="participant_name"
               name="participant_name"
@@ -78,7 +88,9 @@ function SubmitFeedback() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="program_name">Training / Event / Product <span className="required">*</span></label>
+            <label htmlFor="program_name">
+              <BookOpen size={14} className="label-icon" /> Training / Event / Product <span className="required">*</span>
+            </label>
             <input
               id="program_name"
               name="program_name"
@@ -126,10 +138,10 @@ function SubmitFeedback() {
 
           <div className="form-actions">
             <button type="button" className="btn-secondary" onClick={() => navigate('/')}>
-              Cancel
+              <X size={15} /> Cancel
             </button>
             <button type="submit" className="btn-primary" disabled={submitting}>
-              {submitting ? 'Submitting...' : 'Submit Feedback'}
+              {submitting ? 'Submitting...' : <><Send size={15} /> Submit Feedback</>}
             </button>
           </div>
         </form>
