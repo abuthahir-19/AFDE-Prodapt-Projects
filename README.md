@@ -9,24 +9,31 @@ Beyond basic CRUD, the platform ships with a bulk ETL import pipeline, an analyt
 ## Screenshots
 
 **Dashboard** — Central hub showing live stats (total feedback, average rating, excellent and needs-attention counts) alongside the five most recent feedback cards.
+
 ![Dashboard](images/dashboard.png)
 
 **Submit Feedback** — Clean form for participants to submit their name, training/event, a 1–5 star rating, and optional comments.
+
 ![Submit Feedback](images/new-feedback.png)
 
 **All Feedback** — Full paginated list with real-time search by keyword, filter by program name, and filter by star rating.
+
 ![All Feedback](images/all-feedback.png)
 
 **Analytics — Summary & Rating Distribution** — Aggregated KPIs (total feedback, average rating, programs reviewed, top-rated program) paired with a colour-coded bar chart of rating distribution.
+
 ![Analytics Dashboard](images/analytics-dashboard.png)
 
 **Analytics — Program Performance Table** — Ranked table showing each program's response count, average rating badge, visual progress bar, and mini rating-distribution sparkbars.
+
 ![Analytics Program Performance](images/analytics-dashboard-2.png)
 
 **ETL Import — File Upload** — Drag-and-drop zone that accepts CSV or Excel files; shows file name and size once selected before triggering the ETL pipeline.
+
 ![ETL Import Upload](images/etl-import-1.png)
 
 **ETL Import — Results & Job History** — Post-import summary card with record counts (total, valid, imported, invalid, duplicates) and a full history table of all past import jobs.
+
 ![ETL Import Results](images/etl-import-2.png)
 
 ---
