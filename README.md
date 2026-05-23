@@ -1,6 +1,8 @@
 # Feedback Management System
 
-A full-stack web application for centralised training feedback collection, management, bulk data import, and analytics reporting.
+A full-stack web application built to centralise the collection, management, and analysis of participant feedback across training programs and events.
+It enables individuals to submit structured feedback through a clean form, and gives administrators a powerful interface to search, filter, edit, and track every response.
+Beyond basic CRUD, the platform ships with a bulk ETL import pipeline, an analytics dashboard with charts and program-level insights, and a CSV report export — making it a complete feedback operations tool from data entry to reporting.
 
 ---
 
