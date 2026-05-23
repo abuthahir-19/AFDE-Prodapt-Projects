@@ -6,6 +6,7 @@ import Borrowers from "./pages/Borrowers";
 import BorrowReturn from "./pages/BorrowReturn";
 import Search from "./pages/Search";
 import Analytics from "./pages/Analytics";
+import ETL from "./pages/ETL";
 import "./App.css";
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
           <Route path="/borrow-return" element={<BorrowReturn />} />
           <Route path="/search" element={<Search />} />
           <Route path="/analytics" element={<Analytics />} />
+          <Route path="/etl" element={<ETL />} />
         </Routes>
       </main>
     </BrowserRouter>

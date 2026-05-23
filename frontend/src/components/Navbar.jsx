@@ -1,20 +1,48 @@
 import { NavLink } from "react-router-dom";
+import {
+  LayoutDashboard,
+  BookOpen,
+  Users,
+  ArrowLeftRight,
+  Search,
+  BarChart3,
+  Library,
+  DatabaseZap,
+} from "lucide-react";
 import "./Navbar.css";
+
+const links = [
+  { to: "/", label: "Dashboard", icon: LayoutDashboard, end: true },
+  { to: "/books", label: "Books", icon: BookOpen },
+  { to: "/borrowers", label: "Borrowers", icon: Users },
+  { to: "/borrow-return", label: "Borrow / Return", icon: ArrowLeftRight },
+  { to: "/search", label: "Search", icon: Search },
+  { to: "/analytics", label: "Analytics", icon: BarChart3 },
+  { to: "/etl", label: "ETL Pipeline", icon: DatabaseZap },
+];
 
 export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <span className="brand-icon">📚</span>
-        <span className="brand-name">Library MS</span>
+        <div className="brand-logo">
+          <Library size={22} />
+        </div>
+        <div className="brand-text">
+          <span className="brand-name">LibraryMS</span>
+          <span className="brand-sub">Management System</span>
+        </div>
       </div>
+
       <ul className="navbar-links">
-        <li><NavLink to="/" end>Dashboard</NavLink></li>
-        <li><NavLink to="/books">Books</NavLink></li>
-        <li><NavLink to="/borrowers">Borrowers</NavLink></li>
-        <li><NavLink to="/borrow-return">Borrow / Return</NavLink></li>
-        <li><NavLink to="/search">Search</NavLink></li>
-        <li><NavLink to="/analytics">Analytics</NavLink></li>
+        {links.map(({ to, label, icon: Icon, end }) => (
+          <li key={to}>
+            <NavLink to={to} end={end}>
+              <Icon size={15} strokeWidth={2.2} />
+              <span>{label}</span>
+            </NavLink>
+          </li>
+        ))}
       </ul>
     </nav>
   );

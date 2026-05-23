@@ -33,4 +33,8 @@ export const getCategoryStats = () => api.get("/analytics/category-stats");
 export const getMonthlyTrends = () => api.get("/analytics/monthly-trends");
 export const getOverdueTransactions = () => api.get("/analytics/overdue-transactions");
 
+// ── ETL Pipeline ───────────────────────────────────────────────
+export const getEtlStatus = () => api.get("/etl/status");
+export const runEtlPipeline = () => api.post("/etl/run");
+
 export default api;

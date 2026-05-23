@@ -32,6 +32,13 @@ A full-stack Library Management System built with **FastAPI** and **React**, fea
 ![Analytics Dashboard](images/analytics-dashboard.png)
 > Bar chart (Top 10 most borrowed books), Pie chart (borrowing by category), Line chart (monthly trends), and an Overdue Transactions table.
 
+### ETL Pipeline *(Phase 2)*
+![ETL Pipeline - Status & Stages](images/ETL-page-1.png)
+> Status cards showing CSV source row counts vs. database row counts for Books, Borrowers, and Transactions. Pipeline stage visual (Extract → Transform → Load) and a success banner showing completion time after running.
+
+![ETL Pipeline - Summary & Log](images/ETL-page-2.png)
+> Per-entity summary cards (Extracted / Removed / Loaded counts) and a color-coded step-by-step Pipeline Log — blue for Extract, purple for Transform, green for Load — with inline "removed" chips highlighting dirty rows cleaned during transform.
+
 ---
 
 ## Features
@@ -45,7 +52,9 @@ A full-stack Library Management System built with **FastAPI** and **React**, fea
 - **Form Validation** — client-side required-field and format checks on all forms
 
 ### Phase 2 — ETL Pipeline & Analytics
-- **ETL Pipeline** — extracts CSV datasets, removes duplicates and null records, loads clean data into SQLite
+- **ETL Pipeline UI** — browser-triggered Extract → Transform → Load pipeline with live status cards, pipeline stage visual, success/error banner, per-entity summary (Extracted / Removed / Loaded), and a color-coded step-by-step log
+- **ETL Status** — real-time comparison of CSV source row counts vs. current database row counts for Books, Borrowers, and Transactions before running
+- **Dirty Data Cleaning** — Transform phase detects and removes duplicate records, null required fields, and invalid dates; removed rows are flagged inline in the pipeline log
 - **Most Borrowed Books** — bar chart of top 10 titles ranked by borrow count
 - **Category Analytics** — pie chart showing borrowing distribution across 7 genres
 - **Monthly Trends** — line chart of borrow volume spanning Jan 2024 – May 2026
@@ -91,21 +100,24 @@ Library-Management-System/
 │   ├── borrower-management.png
 │   ├── borrow-return-page.png
 │   ├── search-books.png
-│   └── analytics-dashboard.png
+│   ├── analytics-dashboard.png
+│   ├── ETL-page-1.png         # ETL status cards + pipeline stages
+│   └── ETL-page-2.png         # ETL summary + pipeline log
 ├── backend/
 │   ├── main.py                # FastAPI app — routers, CORS, DB init
 │   ├── database.py            # SQLAlchemy engine, session, Base
 │   ├── models.py              # ORM models: Book, Borrower, Transaction
 │   ├── schemas.py             # Pydantic request/response schemas
 │   ├── crud.py                # Database CRUD operations
-│   ├── etl.py                 # ETL pipeline script (Phase 2)
+│   ├── etl.py                 # ETL pipeline logic (Phase 2)
 │   ├── requirements.txt
 │   └── routers/
 │       ├── books.py
 │       ├── borrowers.py
 │       ├── transactions.py
 │       ├── search.py
-│       └── analytics.py       # Analytics endpoints (Phase 2)
+│       ├── analytics.py       # Analytics endpoints (Phase 2)
+│       └── etl_router.py      # ETL status + run endpoints (Phase 2)
 └── frontend/
     ├── package.json
     └── src/
@@ -119,7 +131,9 @@ Library-Management-System/
         │   ├── Borrowers.jsx
         │   ├── BorrowReturn.jsx
         │   ├── Search.jsx
-        │   └── Analytics.jsx  # Phase 2
+        │   ├── Analytics.jsx  # Phase 2
+        │   ├── ETL.jsx        # ETL Pipeline page (Phase 2)
+        │   └── ETL.css
         └── services/
             └── api.js         # Axios API client
 ```
@@ -233,6 +247,12 @@ Then open **http://localhost:5173** in your browser.
 | GET | `/analytics/monthly-trends` | Month-by-month borrow volume |
 | GET | `/analytics/overdue-transactions` | All currently overdue transactions |
 
+### ETL Pipeline *(Phase 2)*
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/etl/status` | CSV row counts + current DB row counts per entity |
+| POST | `/etl/run` | Trigger full Extract → Transform → Load pipeline; returns structured report |
+
 ---
 
 ## Database Schema
@@ -271,7 +291,7 @@ The SQLite database file (`library.db`) is created automatically in `backend/` o
 
 ## Phase 2: ETL Pipeline
 
-The ETL script (`backend/etl.py`) processes three CSV files from the `data/` directory.
+The ETL pipeline processes three CSV files from the `data/` directory through Extract → Transform → Load stages. It can be triggered from the browser UI or the command line.
 
 ### Pipeline Steps
 
@@ -289,7 +309,15 @@ The CSV dataset intentionally includes:
 
 These are detected and removed during the Transform step, demonstrating real-world ETL data cleaning.
 
-### Running the ETL
+### Running the ETL from the UI
+
+Navigate to **ETL Pipeline** in the navbar and click **Run ETL Pipeline**. The page shows:
+1. **Status cards** — CSV source row counts vs. current database row counts for each entity
+2. **Pipeline Stages** — visual Extract → Transform → Load flow
+3. **Summary cards** — Extracted / Removed / Loaded counts per entity after the run
+4. **Pipeline Log** — step-by-step log color-coded by phase (blue = Extract, purple = Transform, green = Load), with inline chips showing how many dirty rows were removed
+
+### Running the ETL from the CLI
 
 ```bash
 cd backend

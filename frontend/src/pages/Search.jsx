@@ -1,4 +1,8 @@
 import { useState } from "react";
+import {
+  Search as SearchIcon, BookOpen, User, Tag, Barcode,
+  CheckCircle, BookMarked, Info, X,
+} from "lucide-react";
 import { searchBooks } from "../services/api";
 import "./Form.css";
 
@@ -23,46 +27,82 @@ export default function Search() {
     }
   };
 
+  const handleClear = () => { setQuery(""); setResults([]); setSearched(false); };
+
   return (
     <div className="page">
-      <h1>Search Books</h1>
+      <div className="page-header">
+        <div className="page-header-icon"><SearchIcon size={22} /></div>
+        <div>
+          <h1>Search Books</h1>
+          <p>Find books by title, author, or category</p>
+        </div>
+      </div>
 
-      <div className="card form-card">
+      <div className="card">
         <form onSubmit={handleSearch} className="search-bar">
-          <input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search by title, author, or category…"
-            className="search-input"
-          />
-          <button type="submit" className="btn btn-primary" disabled={loading}>
+          <div className="search-input-wrap">
+            <SearchIcon size={16} className="search-input-icon" />
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search by title, author, or category…"
+              className="search-input"
+            />
+            {query && (
+              <button type="button" className="search-clear-btn" onClick={handleClear}>
+                <X size={14} />
+              </button>
+            )}
+          </div>
+          <button type="submit" className="btn btn-primary" disabled={loading || !query.trim()}>
+            <SearchIcon size={15} />
             {loading ? "Searching…" : "Search"}
           </button>
         </form>
-        <p className="search-hint">Enter a keyword to search across title, author, and category.</p>
+        <p className="search-hint">
+          <Info size={12} />
+          Searches across book title, author name, and category simultaneously.
+        </p>
       </div>
 
       {searched && (
         <div className="card">
-          <h2>Results {results.length > 0 ? `(${results.length})` : ""}</h2>
+          <div className="card-header">
+            <div className="card-header-icon"><BookOpen size={16} /></div>
+            <h2>
+              {results.length > 0
+                ? <>Results for "<em>{query}</em>" <span className="count-chip">{results.length}</span></>
+                : `No results for "${query}"`}
+            </h2>
+          </div>
           {results.length === 0 ? (
-            <p className="empty">No books found for "{query}".</p>
+            <div className="empty-state">
+              <SearchIcon size={40} />
+              <p>No books match your search. Try a different keyword.</p>
+            </div>
           ) : (
             <div className="table-wrapper">
               <table className="data-table">
                 <thead>
-                  <tr><th>ID</th><th>Title</th><th>Author</th><th>Category</th><th>ISBN</th><th>Status</th></tr>
+                  <tr>
+                    <th><BookOpen size={11} /> Title</th>
+                    <th><User size={11} /> Author</th>
+                    <th><Tag size={11} /> Category</th>
+                    <th><Barcode size={11} /> ISBN</th>
+                    <th>Status</th>
+                  </tr>
                 </thead>
                 <tbody>
                   {results.map((b) => (
                     <tr key={b.book_id}>
-                      <td>{b.book_id}</td>
-                      <td>{b.title}</td>
+                      <td className="td-bold">{b.title}</td>
                       <td>{b.author}</td>
-                      <td>{b.category}</td>
-                      <td>{b.isbn}</td>
+                      <td><span className="badge badge-info">{b.category}</span></td>
+                      <td><span className="isbn-chip">{b.isbn}</span></td>
                       <td>
                         <span className={`badge ${b.availability_status === "available" ? "badge-success" : "badge-warning"}`}>
+                          {b.availability_status === "available" ? <CheckCircle size={10} /> : <BookMarked size={10} />}
                           {b.availability_status}
                         </span>
                       </td>
