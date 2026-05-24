@@ -1,0 +1,16 @@
+# 1. Start the backend (tables auto-create on first run)
+cd backend
+uvicorn app.main:app --reload
+
+# 2. Seed roles/categories/users (if not done yet)
+python seed_data.py
+
+# 3. Generate the 250-record dataset
+python generate_dataset.py
+
+# 4. Start the frontend
+cd ../frontend && npm run dev
+
+# 5. Log in as admin@ccrs.com / Admin@123
+#    Go to Reports → click "Run ETL" to populate analytics tables
+#    Then explore SLA Analysis, Resolution Trends, Agent Performance tabs
