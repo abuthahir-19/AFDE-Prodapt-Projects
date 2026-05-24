@@ -1,0 +1,121 @@
+participant_name,program_name,rating,comments,submitted_date
+Alice Johnson,Python Fundamentals,5,Excellent course with clear explanations. Loved the hands-on exercises.,2024-01-10
+Bob Smith,React Development,4,Very good content. Some topics needed more depth but overall great.,2024-01-11
+Carol White,Node.js Backend,5,Best backend course I have taken. Real-world examples were fantastic.,2024-01-12
+David Brown,Data Science Bootcamp,3,Average content. Expected more advanced topics on statistics.,2024-01-13
+Emma Davis,Machine Learning,5,Mind-blowing curriculum! The instructor explained complex concepts simply.,2024-01-14
+Frank Miller,Cloud Computing,4,Good coverage of AWS services. Would love more hands-on labs.,2024-01-15
+Grace Wilson,DevOps Essentials,4,Great introduction to CI/CD pipelines. Terraform section was excellent.,2024-01-16
+Henry Moore,Cybersecurity Basics,3,Decent overview but lacked depth in penetration testing topics.,2024-01-17
+Iris Taylor,UI/UX Design,5,Creative and inspiring. The design challenges pushed me to think differently.,2024-01-18
+Jack Anderson,Mobile Development,4,Flutter content was solid. Wished there was more iOS-specific content.,2024-01-19
+Karen Thomas,Python Fundamentals,4,Great for beginners. The projects helped cement my understanding.,2024-01-20
+Liam Jackson,React Development,5,React hooks section was gold. Best React course available online.,2024-01-21
+Maria Garcia,Node.js Backend,4,Solid coverage of Express and MongoDB. REST API section was thorough.,2024-01-22
+Nathan Martinez,Data Science Bootcamp,5,Incredibly comprehensive. Pandas and NumPy sections were perfectly paced.,2024-01-23
+Olivia Robinson,Machine Learning,4,Great ML algorithms coverage. The TensorFlow project was challenging but rewarding.,2024-01-24
+Patrick Lewis,Cloud Computing,5,Amazing AWS deep dive. I passed my certification exam after this course.,2024-01-25
+Quinn Clark,DevOps Essentials,3,Good Docker intro but Kubernetes section felt rushed.,2024-01-26
+Rachel Walker,Cybersecurity Basics,5,Excellent hands-on labs for ethical hacking. Very well structured.,2024-01-27
+Samuel Hall,UI/UX Design,4,Figma tutorials were top notch. Accessibility module was eye-opening.,2024-01-28
+Tina Allen,Mobile Development,5,Best mobile dev course I found. React Native and Flutter both covered well.,2024-01-29
+Uma Young,Python Fundamentals,2,Too basic for someone with prior coding experience. Needed advanced track.,2024-01-30
+Victor Hernandez,React Development,3,Content is okay but outdated. Needs updating for React 18 features.,2024-01-31
+Wendy King,Node.js Backend,5,Excellent course! Async programming section was the clearest I have seen.,2024-02-01
+Xavier Wright,Data Science Bootcamp,4,Good blend of theory and practice. Visualization section was outstanding.,2024-02-02
+Yasmine Lopez,Machine Learning,3,Challenging but the support was lacking. Forum responses were slow.,2024-02-03
+Zachary Hill,Cloud Computing,4,Good GCP coverage. Would benefit from more Azure content.,2024-02-04
+Alice Johnson,DevOps Essentials,5,Second time taking a course here and just as impressed. Amazing quality.,2024-02-05
+Bob Smith,Cybersecurity Basics,4,Great foundation in security principles. OWASP module was very thorough.,2024-02-06
+Carol White,UI/UX Design,4,Color theory and typography sections were exceptional.,2024-02-07
+David Brown,Mobile Development,5,Comprehensive mobile course. Publishing to app stores walkthrough was helpful.,2024-02-08
+Emma Davis,Python Fundamentals,5,Perfect refresher. Advanced Python section on decorators was outstanding.,2024-02-09
+Frank Miller,React Development,4,Redux integration was clearly explained. Context API section was good too.,2024-02-10
+Grace Wilson,Node.js Backend,3,Decent intro but the database section needed more depth.,2024-02-11
+Henry Moore,Data Science Bootcamp,4,Strong statistical foundation. The capstone project was very valuable.,2024-02-12
+Iris Taylor,Machine Learning,5,Neural networks section blew my mind. Best ML content I have encountered.,2024-02-13
+Jack Anderson,Cloud Computing,3,Too AWS-focused. Expected more multi-cloud architecture content.,2024-02-14
+Karen Thomas,DevOps Essentials,5,Pipeline automation section changed how I approach deployments.,2024-02-15
+Liam Jackson,Cybersecurity Basics,4,Very practical. Worked through real CVEs which was engaging.,2024-02-16
+Maria Garcia,UI/UX Design,5,User research methods section was extremely valuable for my work.,2024-02-17
+Nathan Martinez,Mobile Development,4,Android and iOS comparison was helpful. State management section was good.,2024-02-18
+Olivia Robinson,Python Fundamentals,4,Object-oriented Python section was excellent. Good progression of difficulty.,2024-02-19
+Patrick Lewis,React Development,5,Best React training I have done. The instructor is top-notch.,2024-02-20
+Quinn Clark,Node.js Backend,4,GraphQL section was the highlight. Authentication module was thorough.,2024-02-21
+Rachel Walker,Data Science Bootcamp,5,The EDA section saved hours of my work. Absolutely recommend.,2024-02-22
+Samuel Hall,Machine Learning,4,Solid ML fundamentals. Feature engineering section was particularly useful.,2024-02-23
+Tina Allen,Cloud Computing,5,Cloud security module was incredibly detailed. Very happy with this course.,2024-02-24
+Uma Young,DevOps Essentials,4,Monitoring and alerting section with Prometheus and Grafana was excellent.,2024-02-25
+Victor Hernandez,Cybersecurity Basics,5,Red team vs blue team exercises were the best part. Highly engaging.,2024-02-26
+Wendy King,UI/UX Design,3,Good basics but lacked advanced interaction design topics.,2024-02-27
+Xavier Wright,Mobile Development,4,Flutter animations section was fascinating. Would revisit this course.,2024-02-28
+Yasmine Lopez,Python Fundamentals,5,Automation scripting section was so practical and immediately useful.,2024-03-01
+Zachary Hill,React Development,4,Component lifecycle clearly explained. Testing with Jest section was solid.,2024-03-02
+Alice Johnson,Node.js Backend,3,The microservices section needed more examples of real-world patterns.,2024-03-03
+Bob Smith,Data Science Bootcamp,5,Time series analysis module was incredibly thorough and well explained.,2024-03-04
+Carol White,Machine Learning,4,Great balance of theory and coding. PyTorch section was excellent.,2024-03-05
+David Brown,Cloud Computing,5,Serverless architecture section was a game changer for my projects.,2024-03-06
+Emma Davis,DevOps Essentials,5,IaC with Terraform was the most practical content in the course.,2024-03-07
+Frank Miller,Cybersecurity Basics,4,Encryption and PKI section was very well explained.,2024-03-08
+Grace Wilson,UI/UX Design,5,Prototyping with Figma and testing with real users was phenomenal.,2024-03-09
+Henry Moore,Mobile Development,3,Cross-platform section could be more detailed on performance trade-offs.,2024-03-10
+Iris Taylor,Python Fundamentals,4,Web scraping with BeautifulSoup was a great practical exercise.,2024-03-11
+Jack Anderson,React Development,5,Server-side rendering with Next.js section was very well structured.,2024-03-12
+Karen Thomas,Node.js Backend,5,Microservices and message queues content was industry-grade quality.,2024-03-13
+Liam Jackson,Data Science Bootcamp,3,Good intro but lacked coverage of modern tools like Polars and DuckDB.,2024-03-14
+Maria Garcia,Machine Learning,5,Computer vision section with OpenCV was outstanding and very hands-on.,2024-03-15
+Nathan Martinez,Cloud Computing,4,Kubernetes on EKS section was the highlight of this cloud course.,2024-03-16
+Olivia Robinson,DevOps Essentials,4,Blue-green deployment strategies were clearly demonstrated.,2024-03-17
+Patrick Lewis,Cybersecurity Basics,5,SOC analyst simulation exercises were incredibly realistic.,2024-03-18
+Quinn Clark,UI/UX Design,4,Accessibility and inclusive design section was very eye-opening.,2024-03-19
+Rachel Walker,Mobile Development,5,App performance optimization techniques were practical and immediately usable.,2024-03-20
+Samuel Hall,Python Fundamentals,3,Good content but the pace was too slow for intermediate developers.,2024-03-21
+Tina Allen,React Development,4,State management comparison between Redux and Zustand was very helpful.,2024-03-22
+Uma Young,Node.js Backend,5,Real-time applications with Socket.io section was outstanding.,2024-03-23
+Victor Hernandez,Data Science Bootcamp,4,Anomaly detection section was highly relevant to my current project.,2024-03-24
+Wendy King,Machine Learning,5,NLP section with transformers was the best I have seen in any course.,2024-03-25
+Xavier Wright,Cloud Computing,3,Content is good but the labs were frequently broken during my enrollment.,2024-03-26
+Yasmine Lopez,DevOps Essentials,5,GitOps workflow section transformed how our team manages deployments.,2024-03-27
+Zachary Hill,Cybersecurity Basics,4,Incident response playbooks section was practical and very well structured.,2024-03-28
+Alice Johnson,UI/UX Design,5,The live critique sessions with the instructor were invaluable.,2024-03-29
+Bob Smith,Mobile Development,4,Push notifications and deep linking module covered everything I needed.,2024-03-30
+Carol White,Python Fundamentals,5,The FastAPI project at the end tied everything together beautifully.,2024-04-01
+David Brown,React Development,4,Custom hooks pattern section was excellent and saved me a lot of time.,2024-04-02
+Emma Davis,Node.js Backend,5,The event loop explanation was the clearest I have seen anywhere.,2024-04-03
+Frank Miller,Data Science Bootcamp,4,The storytelling with data module was a pleasant surprise.,2024-04-04
+Grace Wilson,Machine Learning,4,Hyperparameter tuning with Optuna was a highlight of the curriculum.,2024-04-05
+Henry Moore,Cloud Computing,5,Disaster recovery and high availability patterns were thoroughly covered.,2024-04-06
+Iris Taylor,DevOps Essentials,4,Observability stack with OpenTelemetry was incredibly well explained.,2024-04-07
+Jack Anderson,Cybersecurity Basics,5,Malware analysis section was fascinating. Sandbox environment worked great.,2024-04-08
+Karen Thomas,UI/UX Design,3,Lacking coverage of motion design and micro-interactions.,2024-04-09
+Liam Jackson,Mobile Development,5,The complete app from scratch section was worth the entire enrollment fee.,2024-04-10
+Maria Garcia,Python Fundamentals,4,Type hints and mypy integration section was very practical.,2024-04-11
+Nathan Martinez,React Development,5,Performance optimization with useMemo and useCallback was detailed.,2024-04-12
+Olivia Robinson,Node.js Backend,4,Rate limiting and security hardening for APIs was thorough.,2024-04-13
+Patrick Lewis,Data Science Bootcamp,5,The MLOps pipeline section bridges data science and engineering beautifully.,2024-04-14
+Quinn Clark,Machine Learning,4,Gradient boosting with XGBoost was hands-on and very well paced.,2024-04-15
+Rachel Walker,Cloud Computing,5,Cost optimization strategies saved our company significant cloud spend.,2024-04-16
+Samuel Hall,DevOps Essentials,5,The capstone project deploying a full microservices app was excellent.,2024-04-17
+Tina Allen,Cybersecurity Basics,4,Password management and MFA implementation section was practical.,2024-04-18
+Uma Young,UI/UX Design,5,Design systems and component libraries section was transformative.,2024-04-19
+Victor Hernandez,Mobile Development,4,Offline-first architecture patterns section was very well explained.,2024-04-20
+Wendy King,Python Fundamentals,4,Concurrency with asyncio finally makes sense thanks to this course.,2024-04-21
+Xavier Wright,React Development,3,Testing library setup was confusing. Needs better documentation support.,2024-04-22
+Yasmine Lopez,Node.js Backend,4,Caching strategies with Redis section was immediately applicable.,2024-04-23
+Zachary Hill,Data Science Bootcamp,5,The Kaggle competition walkthrough at the end was incredibly motivating.,2024-04-24
+Alice Johnson,Machine Learning,4,Recommender systems section was comprehensive and well structured.,2024-04-25
+Bob Smith,Cloud Computing,4,Multi-region architecture patterns section was very thorough.,2024-04-26
+Carol White,DevOps Essentials,5,The security scanning in pipelines section was a great addition.,2024-04-27
+David Brown,Cybersecurity Basics,5,Threat modeling with STRIDE was the most practical security framework I learned.,2024-04-28
+Emma Davis,UI/UX Design,4,Usability testing and heuristic evaluation section was very hands-on.,2024-04-29
+Frank Miller,Mobile Development,5,The app store optimization section gave practical tips I applied immediately.,2024-04-30
+Grace Wilson,Python Fundamentals,1,Far too basic. I expected an intermediate course based on the description.,2024-05-01
+Henry Moore,React Development,6,Outstanding course but this rating field goes to 6 for me personally!,2024-05-02
+Iris Taylor,Node.js Backend,0,Terrible experience overall. Nothing worked as promised.,2024-05-03
+Jack Anderson,Data Science Bootcamp,N/A,Could not rate this as the final project submission portal was broken.,2024-05-04
+Karen Thomas,Machine Learning,seven,The content was great but the rating system confused me.,2024-05-05
+Liam Jackson,Cloud Computing,5,Absolutely transformative course. Changed my entire career trajectory.,2024-05-06
+Maria Garcia,DevOps Essentials,4,Secrets management with Vault was the most relevant section for my work.,2024-05-07
+Nathan Martinez,Cybersecurity Basics,5,Purple team exercises were the best learning experience I had this year.,2024-05-08
+Olivia Robinson,UI/UX Design,4,Competitive analysis frameworks section was surprisingly useful.,2024-05-09
+Patrick Lewis,Mobile Development,5,The biometric authentication implementation was exceptionally well taught.,2024-05-10
