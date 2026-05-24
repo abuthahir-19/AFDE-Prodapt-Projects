@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Blue gradient background matching navbar -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#1251a3"/>
+      <stop offset="100%" stop-color="#1e88e5"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="7" fill="url(#bg)"/>
+  <!-- Headset icon (24x24 path, centered with translate(4,4)) -->
+  <g transform="translate(4,4)" fill="white">
+    <path d="M12 3C7.03 3 3 7.03 3 12v4c0 1.1.9 2 2 2h1c1.1 0 2-.9
+             2-2v-3c0-1.1-.9-2-2-2H5.07C5.56 7.19 8.5 5 12 5s6.44
+             2.19 6.93 6H17c-1.1 0-2 .9-2 2v3c0 1.1.9 2 2 2h1a3 3
+             0 0 0 3-3v-4c0-4.97-4.03-9-9-9z"/>
+  </g>
+</svg>
