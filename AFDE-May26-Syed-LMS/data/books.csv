@@ -1,0 +1,51 @@
+book_id,title,author,category,isbn,availability_status
+1,The Great Gatsby,F. Scott Fitzgerald,Fiction,978-0743273565,available
+2,To Kill a Mockingbird,Harper Lee,Fiction,978-0061935466,available
+3,1984,George Orwell,Fiction,978-0451524935,borrowed
+4,Brave New World,Aldous Huxley,Fiction,978-0060850524,available
+5,The Catcher in the Rye,J.D. Salinger,Fiction,978-0316769174,borrowed
+6,Pride and Prejudice,Jane Austen,Fiction,978-0141439518,available
+7,The Hobbit,J.R.R. Tolkien,Fiction,978-0547928227,borrowed
+8,Harry Potter and the Sorcerer's Stone,J.K. Rowling,Fiction,978-0439708180,available
+9,The Alchemist,Paulo Coelho,Fiction,978-0062315007,borrowed
+10,Lord of the Flies,William Golding,Fiction,978-0399501487,available
+11,A Brief History of Time,Stephen Hawking,Science,978-0553380163,borrowed
+12,The Selfish Gene,Richard Dawkins,Science,978-0198788607,available
+13,Cosmos,Carl Sagan,Science,978-0345539434,available
+14,The Origin of Species,Charles Darwin,Science,978-0140432053,borrowed
+15,Sapiens,Yuval Noah Harari,Non-Fiction,978-0062316097,available
+16,Thinking Fast and Slow,Daniel Kahneman,Non-Fiction,978-0374533557,borrowed
+17,Freakonomics,Steven Levitt,Non-Fiction,978-0060731335,available
+18,The Tipping Point,Malcolm Gladwell,Non-Fiction,978-0316346627,available
+19,Outliers,Malcolm Gladwell,Non-Fiction,978-0316017930,borrowed
+20,Blink,Malcolm Gladwell,Non-Fiction,978-0316010665,available
+21,Clean Code,Robert C. Martin,Technology,978-0132350884,borrowed
+22,The Pragmatic Programmer,David Thomas,Technology,978-0135957059,available
+23,Design Patterns,Gang of Four,Technology,978-0201633610,available
+24,You Don't Know JS,Kyle Simpson,Technology,978-1491924464,borrowed
+25,Introduction to Algorithms,Thomas Cormen,Technology,978-0262033848,available
+26,Code Complete,Steve McConnell,Technology,978-0735619678,available
+27,The Mythical Man-Month,Fred Brooks,Technology,978-0201835953,borrowed
+28,Refactoring,Martin Fowler,Technology,978-0134757599,available
+29,Sapiens: A Brief History,Yuval Noah Harari,History,978-0771038501,available
+30,Guns Germs and Steel,Jared Diamond,History,978-0393317558,borrowed
+31,The Art of War,Sun Tzu,History,978-1590302255,available
+32,A People's History of the United States,Howard Zinn,History,978-0062397348,available
+33,The Silk Roads,Peter Frankopan,History,978-1101912379,borrowed
+34,Genghis Khan and the Making of the Modern World,Jack Weatherford,History,978-0609809648,available
+35,The Diary of a Young Girl,Anne Frank,Biography,978-0553296983,available
+36,Long Walk to Freedom,Nelson Mandela,Biography,978-0316548182,borrowed
+37,Steve Jobs,Walter Isaacson,Biography,978-1451648539,available
+38,Elon Musk,Ashlee Vance,Biography,978-0062301239,borrowed
+39,The Story of My Experiments with Truth,Mahatma Gandhi,Biography,978-0807059098,available
+40,Leonardo da Vinci,Walter Isaacson,Biography,978-1501139154,available
+41,The 7 Habits of Highly Effective People,Stephen Covey,Self-Help,978-1982137274,borrowed
+42,How to Win Friends and Influence People,Dale Carnegie,Self-Help,978-0671027032,available
+43,Atomic Habits,James Clear,Self-Help,978-0735211292,borrowed
+44,The Power of Now,Eckhart Tolle,Self-Help,978-1577314806,available
+45,Mindset,Carol S. Dweck,Self-Help,978-0345472328,borrowed
+46,The Republic,Plato,Philosophy,978-0140455113,available
+47,Meditations,Marcus Aurelius,Philosophy,978-0812968255,available
+48,Thus Spoke Zarathustra,Friedrich Nietzsche,Philosophy,978-0140441185,borrowed
+49,Critique of Pure Reason,Immanuel Kant,Philosophy,978-0521657297,available
+50,Beyond Good and Evil,Friedrich Nietzsche,Philosophy,978-0679724650,available

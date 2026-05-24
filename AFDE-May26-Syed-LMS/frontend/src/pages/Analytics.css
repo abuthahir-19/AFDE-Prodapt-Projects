@@ -1,0 +1,113 @@
+.analytics-page {
+  padding: 1.5rem;
+}
+
+.analytics-title {
+  margin: 0 0 1.5rem;
+  color: #1e3a5f;
+  font-size: 1.75rem;
+}
+
+.analytics-loading,
+.analytics-error {
+  padding: 2rem;
+  text-align: center;
+  font-size: 1rem;
+  color: #555;
+}
+
+.analytics-error {
+  color: #c62828;
+}
+
+/* Two-column grid for top row */
+.analytics-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Card shared style */
+.analytics-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.analytics-card h2 {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+  color: #1e3a5f;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.analytics-card--full {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Overdue badge (count pill next to heading) */
+.overdue-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #c62828;
+  color: #fff;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  min-width: 1.4rem;
+  height: 1.4rem;
+  padding: 0 0.4rem;
+}
+
+/* Days overdue pill in table */
+.days-overdue-badge {
+  display: inline-block;
+  background: #ffebee;
+  color: #c62828;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+}
+
+.analytics-empty {
+  color: #888;
+  font-style: italic;
+}
+
+/* Scrollable table wrapper */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.analytics-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.analytics-table th {
+  background: #f0f4f8;
+  color: #1e3a5f;
+  text-align: left;
+  padding: 0.65rem 1rem;
+  font-weight: 600;
+  border-bottom: 2px solid #dde3ea;
+}
+
+.analytics-table td {
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid #eef0f3;
+  color: #333;
+}
+
+.analytics-table tbody tr:hover {
+  background: #f8fafc;
+}
