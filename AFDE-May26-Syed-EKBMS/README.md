@@ -41,6 +41,17 @@ Full-text search across titles, descriptions, and content. Results display star 
 
 ---
 
+### Bookmarks
+![Bookmarks List](images/bookmarks-1.png)
+
+Users can save articles for later by clicking the bookmark button on any article. The Bookmarks page displays all saved articles as cards with title, description, tags, author, category, view count, and rating at a glance.
+
+![Bookmarks Detail](images/bookmarks-2.png)
+
+Opening a bookmarked article shows the full content with the bookmark button reflecting the saved state. Clicking it again removes the bookmark instantly.
+
+---
+
 ### Approval Queue
 ![Article Approval](images/article-approval.png)
 
