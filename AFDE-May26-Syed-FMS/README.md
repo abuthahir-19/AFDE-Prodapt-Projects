@@ -48,6 +48,21 @@ Extended the platform with a full ETL data-import pipeline (CSV / Excel), an ana
 
 ---
 
+## System Architecture
+
+The application follows a clean 4-layer architecture — React frontend communicates with FastAPI's service layer via Axios, which delegates to backend routers and services, all persisting data through SQLAlchemy into SQLite.
+
+![System Architecture](images/FBMS-Architecture.png)
+
+| Layer | Components |
+|-------|-----------|
+| **React Frontend** | Dashboard, Submit, Browse, Detail, Analytics, Import |
+| **Service Layer** | CRUD, Search, Analytics, ETL (via Axios) |
+| **Backend** | `feedback.py`, `etl.py`, `crud.py`, `etl_service.py` (via FastAPI) |
+| **Data Layer** | `feedback` table, `etl_jobs` table, CSV report (via SQLAlchemy) |
+
+---
+
 ## Tech Stack
 
 | Layer | Phase 1 | Phase 2 Additions |
